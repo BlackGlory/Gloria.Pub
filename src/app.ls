@@ -3,6 +3,7 @@
 require! 'vue':Vue
 require! 'keen-ui':Keen
 require! 'vue-router': VueRouter
+
 require! './components/PubApp.vue': PubApp
 require! './components/PubHome.vue': PubHome
 require! './components/PubTask.vue': PubTask
@@ -15,7 +16,7 @@ router = new VueRouter!
 router.map do
   '/':
     component: PubHome
-  '/task/:id':
+  '/task':
     component: PubTask
 
 router.start PubApp, '#app'

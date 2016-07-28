@@ -1,12 +1,19 @@
 <template>
   <div class="pub-footer">
-    <nav class="is-fullwidth">
-      <div class="container">
-        <div class="content has-text-centered">
-          <p>Gloria by <a href="https://www.blackglory.me">BlackGlory</a>. The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</p>
-        </div>
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Gloria</strong> by <a href="//www.blackglory.me">BlackGlory</a>. The source code is licensed
+          <a href="//opensource.org/licenses/mit-license.php">MIT</a>. The website content is licensed
+          <a href="//creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.
+        </p>
+        <p>
+          <a class="icon" href="//github.com/BlackGlory/Gloria">
+            <i class="fa fa-github"></i>
+          </a>
+        </p>
       </div>
-    </nav>
+    </div>
   </div>
 </template>
 
@@ -21,5 +28,5 @@ export
 .pub-footer
   height: 52px
   line-height: 52px
-  background-color: white
+  //background-color: white
 </style>

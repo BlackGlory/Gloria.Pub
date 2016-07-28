@@ -4,7 +4,7 @@
   "description": "A website to share your Gloria task.",
   "main": "build/app.html",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --content-base build/",
+    "dev": "webpack-dev-server --inline --hot --content-base dev/",
     "build": "webpack --display-error-details",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "bulma": "^0.1.0",
+    "codemirror": "^5.17.0",
     "font-awesome": "^4.6.3",
     "vue": "^1.0.26",
     "vue-router": "^0.7.13"
