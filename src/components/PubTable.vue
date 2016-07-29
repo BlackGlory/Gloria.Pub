@@ -9,26 +9,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Misty Abbott</td>
-          <td>Good</td>
-          <td>Bass Guitar</td>
-        </tr>
-        <tr>
-          <td>John Smith</td>
-          <td>Good</td>
-          <td>Rhythm Guitar</td>
-        </tr>
-        <tr>
-          <td>Robert Mikels</td>
-          <td>Good</td>
-          <td>Lead Guitar</td>
-        </tr>
-        <tr>
-          <td>Karyn Holmberg</td>
-          <td>Good</td>
-          <td>Drums</td>
-        </tr>
+        <template v-for="item in items">
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.author }}</td>
+          </tr>
+        </template>
       </tbody>
     </table>
   </div>
@@ -39,6 +26,10 @@
 
 export
   name: 'pub-table'
+  props:
+    items:
+      type: Array
+      default: []
 </script>
 
 <style lang="sass">

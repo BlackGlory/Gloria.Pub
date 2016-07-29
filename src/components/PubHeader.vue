@@ -16,17 +16,20 @@
         </span>
 
         <div class="nav-right nav-menu">
-          <a class="nav-item"  v-link="'/'">
+          <a class="nav-item" v-link="'/'">
             Home
           </a>
-          <a class="nav-item"  v-link="'task'">
+          <a class="nav-item" v-link="'/task'">
             Task
           </a>
-          <a class="nav-item"  v-link="'docs'">
+          <a class="nav-item" v-link="'/docs'">
             Documentation
           </a>
-          <a class="nav-item"  href="//blog.gloria.pub">
+          <a class="nav-item" href="//blog.gloria.pub">
             Blog
+          </a>
+          <a class="nav-item" v-link="'/login'">
+            Login
           </a>
 
           <span class="nav-item">

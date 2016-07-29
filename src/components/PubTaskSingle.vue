@@ -1,20 +1,20 @@
 <template>
-  <div class="pub-task">
+  <div class="pub-task-single">
     <div class="section">
       <div class="container">
         <article class="hero">
           <div class="hero-head">
             <h1 class="title">
-              知乎者也
+              {{ name }}
             </h1>
             <h2 class="subtitle">
-              Cool, Cooler, Coolest的通知任务.
+              {{ description }}
             </h2>
           </div>
           <div class="hero-body">
             <div class="columns">
               <div class="column is-three-quarters">
-                <code-mirror class="editor" :read-only="true" :value="code"></code-mirror>
+                <code-mirror :read-only="true" :value="code"></code-mirror>
               </div>
               <div class="column">
                 <a class="button is-primary is-large">Install</a>
@@ -33,14 +33,27 @@
 'use strict'
 
 require! './CodeMirror.vue': CodeMirror
+require! '../utils.ls': { get-task }
 
 export
-  name: 'pub-task'
+  name: 'pub-task-single'
   data: ->
-    code: 'function() {}'
+    id: ''
+    name: ''
+    code: ''
+    description: ''
+    author: ''
   components: {
     CodeMirror
   }
+  created: ->
+    get-task @$route.params.id
+    .then task ~>
+      @$data.name = task.name
+      @$data.code = task.code
+      @$data.description = task.description
+      @$data.author = task.author
+      @$data.id = task.id
 </script>
 
 <style lang="sass">

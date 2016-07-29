@@ -18,7 +18,7 @@
             </span>
             <span>Install Extension</span>
           </a>
-          <a class="button is-large" href="/task">
+          <a class="button is-large" v-link="'task'">
             View tasks
           </a>
         </p>
@@ -57,7 +57,7 @@
         <h2 class="title">
           Hot task
         </h2>
-        <pub-table></pub-table>
+        <pub-table :items="newList"></pub-table>
       </div>
     </section>
 
@@ -68,7 +68,7 @@
         <h2 class="title">
           New task
         </h2>
-        <pub-table></pub-table>
+        <pub-table :items="hotList"></pub-table>
       </div>
     </section>
 
@@ -86,12 +86,24 @@
 'use strict'
 
 require! './PubTable.vue': PubTable
+require! '../utils.ls': { get-tasks-by-time, get-tasks-by-hot }
 
 export
   name: 'pub-home'
+  data: ->
+    hot-list: []
+    new-list: []
   components: {
     PubTable
   }
+  created: ->
+    get-tasks-by-time!
+    .then (new-list) ~>
+      @$data.new-list = new-list
+
+    get-tasks-by-hot!
+    .then (hot-list) ~>
+      @$data.hot-list = hot-list
 </script>
 
 <style lang="sass">

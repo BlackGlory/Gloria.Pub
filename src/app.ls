@@ -6,7 +6,11 @@ require! 'vue-router': VueRouter
 
 require! './components/PubApp.vue': PubApp
 require! './components/PubHome.vue': PubHome
-require! './components/PubTask.vue': PubTask
+require! './components/PubTaskSingle.vue': PubTaskSingle
+require! './components/PubTaskList.vue': PubTaskList
+require! './components/PubLogin.vue': PubLogin
+require! './components/PubSignUp.vue': PubSignUp
+require! './components/PubTaskCreator.vue': PubTaskCreator
 
 Vue.use VueRouter
 Vue.use Keen
@@ -17,6 +21,14 @@ router.map do
   '/':
     component: PubHome
   '/task':
-    component: PubTask
+    component: PubTaskList
+  '/task:id':
+    component: PubTaskSingle
+  '/login':
+    component: PubLogin
+  '/signup':
+    component: PubSignUp
+  '/create'
+    component: PubTaskCreator
 
 router.start PubApp, '#app'
