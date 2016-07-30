@@ -4,6 +4,8 @@ require! 'vue':Vue
 require! 'keen-ui':Keen
 require! 'vue-router': VueRouter
 
+require! './utils.ls': { heartbeat }
+
 require! './components/PubApp.vue': PubApp
 require! './components/PubHome.vue': PubHome
 require! './components/PubTaskSingle.vue': PubTaskSingle
@@ -28,7 +30,11 @@ router.map do
     component: PubLogin
   '/signup':
     component: PubSignUp
-  '/create'
+  '/create':
     component: PubTaskCreator
+
+router.before-each (transition) ->
+  heartbeat!
+  transition.next!
 
 router.start PubApp, '#app'

@@ -1,16 +1,18 @@
 <template>
   <div class="pub-login">
-    <form method="post" class="control">
-      <p class="control has-icon">
-        <input type="text" :value.sync="name" name="name" placeholder="name" class="input"/><i class="fa fa-user"></i>
-      </p>
-      <p class="control has-icon">
-        <input type="password" :value.sync="name" name="password" placeholder="password" class="input"/><i class="fa fa-lock"></i>
-      </p>
-      <p class="control">
-        <button :click="login" class="button is-success">Login</button><span> Or <a v-link="'/signup'" class="is-link align-bottom underline">Sign up</a></span>
-      </p>
-    </form>
+    <div class="box">
+      <form class="control">
+        <p class="control has-icon">
+          <input type="text" v-model="name" name="name" placeholder="name" class="input"/><i class="fa fa-user"></i>
+        </p>
+        <p class="control has-icon">
+          <input type="password" v-model="password" name="password" placeholder="password" class="input"/><i class="fa fa-lock"></i>
+        </p>
+        <p class="control">
+          <a @click="login" class="button is-success">Login</a><span> or <a v-link="'/signup'" class="is-link align-bottom underline">Sign up</a></span>
+        </p>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -26,9 +28,12 @@ export
     password: ''
   methods:
     login: ->
-      login @$data.name, @$data.password
+      { name, password } = @$data
+      login name, password
       .then ~>
-        $router.go '/task'
+        @$router.go '/task'
+      .catch (err) ->
+        console.log err
 </script>
 
 <style lang="sass">

@@ -31,6 +31,9 @@
           <a class="nav-item" v-link="'/login'">
             Login
           </a>
+          <a class="nav-item" @click="logout">
+            Logout
+          </a>
 
           <span class="nav-item">
             <a class="button is-info" href="//github.com/BlackGlory/Gloria">
@@ -49,8 +52,14 @@
 <script lang="livescript">
 'use strict'
 
+require! '../utils.ls': { logout }
+
 export
   name: 'pub-header'
+  methods:
+    logout: ->
+      logout!
+      .then (x) -> console.log x
 </script>
 
 <style lang="sass">

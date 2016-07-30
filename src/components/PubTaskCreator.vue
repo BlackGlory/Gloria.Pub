@@ -1,17 +1,17 @@
 <template>
   <div class="pub-task-creator">
-    <form method="post" class="control">
+    <form class="control">
       <p class="control">
-        <input type="text" :value.sync="name" name="name" placeholder="name" class="input"/>
+        <input type="text" v-model="name" name="name" placeholder="name" class="input"/>
       </p>
       <p class="control">
-        <input type="text" :value.sync="description" name="description" placeholder="description" class="input"/>
+        <input type="text" v-model="description" name="description" placeholder="description" class="input"/>
       </p>
       <p class="control">
-        <code-mirror :read-only="true" :value="code"></code-mirror>
+        <code-mirror :value.sync="code"></code-mirror>
       </p>
       <p class="control">
-        <button :click="create" class="button is-success">Create</button><span> Or <a v-link="'/task'" class="is-link align-bottom underline">Cancel</a></span>
+        <a @click="create" class="button is-success">Create</a><span> Or <a v-link="'/task'" class="is-link align-bottom underline">Cancel</a></span>
       </p>
     </form>
   </div>
@@ -21,6 +21,7 @@
 'use strict'
 
 require! '../utils.ls': { create }
+require! './CodeMirror.vue': CodeMirror
 
 export
   name: 'pub-task-creator'
@@ -28,6 +29,9 @@ export
     name: ''
     code: ''
     description: ''
+  components: {
+    CodeMirror
+  }
   methods:
     create: ->
       create @$data.name, @$data.code, @$data.description
