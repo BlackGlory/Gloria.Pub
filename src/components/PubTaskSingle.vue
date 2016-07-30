@@ -8,8 +8,11 @@
               {{ name }}
             </h1>
             <h2 class="subtitle">
-              {{ description }}
+              <i class="fa fa-user"></i> {{ author }}
             </h2>
+            <h3 class="subtitle">
+              {{ description }}
+            </h3>
           </div>
           <div class="hero-body">
             <div class="columns">
@@ -48,12 +51,12 @@ export
   }
   created: ->
     get-task @$route.params.id
-    .then task ~>
+    .then (task) ~>
       @$data.name = task.name
       @$data.code = task.code
       @$data.description = task.description
       @$data.author = task.author
-      @$data.id = task.id
+      @$data.id = task._id
 </script>
 
 <style lang="sass">

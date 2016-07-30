@@ -1,7 +1,15 @@
 <template>
   <div class="pub-task-list">
-    <a v-link="'/create'" class="button">Create</a>
-    <pub-table :items="tasks"></pub-table>
+    <div class="section">
+      <nav>
+        <p class="control has-addons">
+          <input class="input" type="text" placeholder="Find a task">
+          <a class="button is-info">Search</a>
+        </p>
+        <a v-link="'/create'" class="button">Create</a>
+      </nav>
+      <pub-table :items="tasks"></pub-table>
+    </div>
   </div>
 </template>
 
@@ -22,9 +30,11 @@ export
   }
   created: ->
     get-tasks-list!
-    .then (lis1t) ~>
+    .then (list) ~>
       @$data.tasks = list
 </script>
 
 <style lang="sass">
+nav
+  margin-bottom: 1rem
 </style>

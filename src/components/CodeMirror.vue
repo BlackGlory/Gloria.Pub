@@ -16,9 +16,6 @@ export
     read-only:
       type: Boolean
       default: false
-  computed:
-    sync: ->
-      @$data.editor.set-value @value
   ready: ->
     @$data.editor = CodeMirror @$els.container, do
       line-numbers: true
@@ -26,7 +23,9 @@ export
       viewport-margin: Infinity
       read-only: @read-only
 
-    @$data.editor.set-value @value
+    @$watch 'value', (->
+      @$data.editor.set-value @value
+    ), immediate: true
 
     @$data.editor.on 'change', (cm) ~>
       @value = cm.get-value!

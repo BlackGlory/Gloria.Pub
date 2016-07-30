@@ -1,5 +1,5 @@
 <template>
-  <div class="pub-sign-up">
+  <div class="pub-signup">
     <div class="box">
       <form class="control">
         <p class="control has-icon">
@@ -9,7 +9,7 @@
           <input type="password" v-model="password" placeholder="password" class="input"/><i class="fa fa-lock"></i>
         </p>
         <p class="control">
-          <a @click="signUp" class="button is-success">Sign up</a><span> or <a v-link="'/login'" class="is-link align-bottom underline">Login</a></span>
+          <a @click="signup" class="button is-success">Sign up</a><span> or <a v-link="'/login'" class="is-link align-bottom underline">Login</a></span>
         </p>
       </form>
     </div>
@@ -22,12 +22,12 @@
 require! '../utils.ls': { sign-up, login }
 
 export
-  name: 'pub-sign-up'
+  name: 'pub-signup'
   data: ->
     name: ''
     password: ''
   methods:
-    sign-up: ->
+    signup: ->
       { name, password } = @$data
       sign-up name, password
       .then ~>
@@ -37,4 +37,7 @@ export
 </script>
 
 <style lang="sass">
+.pub-signup
+  width: 30rem
+  margin: 2rem auto
 </style>

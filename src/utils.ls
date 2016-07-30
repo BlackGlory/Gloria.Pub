@@ -1,12 +1,6 @@
 const DB_SERVER = 'http://gloria.pub:5984'
 
 function create-form-data kv
-  /*
-  fd = new FormData()
-  for k, v of kv
-    fd.append k, v
-  fd
-  */
   search-params = new URLSearchParams!
   for k, v of kv
     search-params.set k, v
@@ -16,15 +10,25 @@ function check-status res
   if 200 <= res.status < 300
     res
   else
-    throw new Error res.status-text
+    res.json!
+    .then ({ reason }) ->
+      throw new Error reason
 
 function to-json res
   res.json!
 
+function get-uuid
+  new Promise (resolve, reject) ->
+    fetch "#{DB_SERVER}/_uuids"
+    .then check-status
+    .then to-json
+    .then (x) -> x.uuids[0]
+    .then resolve
+    .catch reject
+
 export function get-tasks-list
   new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/database/_design/tasks/_view/list",
-      credentials: 'include'
+    fetch "#{DB_SERVER}/gloria/_design/tasks/_view/list"
     .then check-status
     .then to-json
     .then ({ rows }) ->
@@ -33,8 +37,7 @@ export function get-tasks-list
 
 export function get-tasks-by-time
   new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/database/_design/tasks/_view/list",
-      credentials: 'include'
+    fetch "#{DB_SERVER}/gloria/_design/tasks/_view/list"
     .then check-status
     .then to-json
     .then ({ rows }) ->
@@ -43,8 +46,7 @@ export function get-tasks-by-time
 
 export function get-tasks-by-hot
   new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/database/_design/tasks/_view/list",
-      credentials: 'include'
+    fetch "#{DB_SERVER}/gloria/_design/tasks/_view/list"
     .then check-status
     .then to-json
     .then ({ rows }) ->
@@ -53,8 +55,7 @@ export function get-tasks-by-hot
 
 export function get-task id
   new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/database/#{id}",
-      credentials: 'include'
+    fetch "#{DB_SERVER}/gloria/#{id}"
     .then check-status
     .then to-json
     .then resolve
@@ -97,4 +98,28 @@ export function heartbeat
   fetch "#{DB_SERVER}/_session",
     credentials: 'include'
   .then check-status
-  .then (x) -> console.log x
+
+function get-user-name
+  new Promise (resolve, reject) ->
+    heartbeat!
+    .then to-json
+    .then ({ user-ctx: { name } }) -> name
+    .then resolve
+    .catch reject
+
+export function create name, code, description
+  new Promise (resolve, reject) ->
+    get-user-name!
+    .then (author) ->
+      fetch "#{DB_SERVER}/gloria/",
+        credentials: 'include'
+        headers:
+          'Authorization': '""'
+          'Content-Type': 'application/json'
+        method: 'POST'
+        body: JSON.stringify { name, code, author, description }
+    .then check-status
+    .then to-json
+    .then ({ id }) ->
+      resolve id
+    .catch reject

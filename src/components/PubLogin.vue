@@ -33,8 +33,11 @@ export
       .then ~>
         @$router.go '/task'
       .catch (err) ->
-        console.log err
+        alert err
 </script>
 
 <style lang="sass">
+.pub-login
+  width: 30rem
+  margin: 2rem auto
 </style>
