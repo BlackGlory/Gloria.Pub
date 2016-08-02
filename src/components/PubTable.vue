@@ -11,7 +11,7 @@
       <tbody>
         <template v-for="item in items">
           <tr>
-            <td><a v-link="'/task/' + item.id">{{ item.name }}</a></td>
+            <td><a v-link="'/task/' + item._id">{{ item.name }}</a></td>
             <td>{{ item.description }}</td>
             <td>{{ item.author }}</td>
           </tr>

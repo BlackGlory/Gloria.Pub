@@ -4,10 +4,10 @@
       <a class="button" v-show="pagination.previous" v-link="baseUrl + '/page/' + pagination.previous">Previous</a>
       <a class="button" v-show="pagination.next" v-link="baseUrl + '/page/' + pagination.next">Next page</a>
       <ul>
-        <li>
-          <a class="button" v-show="pagination.first" v-link="baseUrl + '/page/' + pagination.first">{{ pagination.first }}</a>
+        <li v-show="pagination.first">
+          <a class="button" v-link="baseUrl + '/page/' + pagination.first">{{ pagination.first }}</a>
         </li>
-        <li>
+        <li v-show="pagination.first">
           <span>...</span>
         </li>
         <li>
@@ -17,13 +17,13 @@
           <a class="button is-primary" v-show="pagination.current" v-link="baseUrl + '/page/' + pagination.current">{{ pagination.current }}</a>
         </li>
         <li>
-          <a class="button" v-show="pagination.next" v-link="baseUrl + '/page/' + pagination.next">{{ pagination.next }}</a>
+          <a class="button" v-show="pagination.next !== pagination.last" v-link="baseUrl + '/page/' + pagination.next">{{ pagination.next }}</a>
         </li>
-        <li>
+        <li v-show="pagination.last">
           <span>...</span>
         </li>
         <li>
-          <a class="button" v-show="pagination.next !== pagination.last" v-link="baseUrl + '/page/' + pagination.last">{{ pagination.last }}</a>
+          <a class="button" v-show="pagination.last" v-link="baseUrl + '/page/' + pagination.last">{{ pagination.last }}</a>
         </li>
       </ul>
     </nav>

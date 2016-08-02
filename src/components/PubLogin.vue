@@ -32,13 +32,13 @@ export
     get-info!
     .then ({ name }) ~>
       alert 'you have logged'
-      @$router.go '/task'
+      @$router.go '/tasks'
   methods:
     login: ->
       { name, password } = @$data
       login name, password
       .then ~>
-        @$router.go '/task'
+        @$router.go '/tasks'
       .catch (status) ->
         switch status
         | 403 => alert 'password incorrect'

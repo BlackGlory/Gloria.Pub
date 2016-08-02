@@ -13,7 +13,7 @@
             <code-mirror :value.sync="code"></code-mirror>
           </p>
           <p class="control">
-            <a @click="create" class="button is-success">Create</a><span> Or <a v-link="'/task'" class="is-link align-bottom underline">Cancel</a></span>
+            <a @click="create" class="button is-success">Create</a><span> Or <a v-link="'/tasks'" class="is-link align-bottom underline">Cancel</a></span>
           </p>
         </form>
       </div>

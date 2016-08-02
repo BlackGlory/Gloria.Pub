@@ -38,7 +38,7 @@ export
         | otherwise => console.log status
       .then login name, password
       .then ~>
-        @$router.go '/task'
+        @$router.go '/tasks'
       .catch (status) ->
         switch status
         | 400 => alert 'unkown format'

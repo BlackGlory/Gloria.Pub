@@ -61,8 +61,8 @@ export
       @$data.description = task.description
       @$data.author = task.author
       @$data.id = task._id
-      @$data.created = task._created
-      @$data.updated = task._updated
+      @$data.created = new Date task._created
+      @$data.updated = new Date task._updated
     .catch (status) ~>
       switch status
       | 404 => @$router.go '/tasks'

@@ -19,8 +19,8 @@
           <a class="nav-item" v-link="'/'">
             Home
           </a>
-          <a class="nav-item" v-link="'/task'">
-            Task
+          <a class="nav-item" v-link="'/tasks'">
+            Tasks
           </a>
           <a class="nav-item" v-link="'/docs'">
             Documentation

@@ -18,7 +18,7 @@
             </span>
             <span>Install Extension</span>
           </a>
-          <a class="button is-large" v-link="'task'">
+          <a class="button is-large" v-link="'tasks'">
             View tasks
           </a>
         </p>

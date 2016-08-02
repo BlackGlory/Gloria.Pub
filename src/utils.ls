@@ -9,9 +9,9 @@ function check-status res
 function to-json res
   res.json!
 
-export function get-tasks
+export function get-tasks page = 1, keyword = ''
   new Promise (resolve, reject) ->
-    fetch "#{API_SERVER}/tasks",
+    fetch "#{API_SERVER}/tasks?page=#{page}&keyword=#{keyword}",
       credentials: 'include'
     .then check-status
     .then to-json
@@ -72,6 +72,7 @@ export function get-info
 export function create-task name, code, description
   new Promise (resolve, reject) ->
     fetch "#{API_SERVER}/task/",
+      credentials: 'include'
       method: 'POST'
       headers:
         'Content-Type': 'application/json'

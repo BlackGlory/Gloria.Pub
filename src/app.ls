@@ -9,7 +9,8 @@ require! './utils.ls': { heartbeat }
 require! './components/PubApp.vue': PubApp
 require! './components/PubHome.vue': PubHome
 require! './components/PubTaskSingle.vue': PubTaskSingle
-require! './components/PubTaskList.vue': PubTaskList
+require! './components/PubTasks.vue': PubTasks
+require! './components/PubTasksPage.vue': PubTasksPage
 require! './components/PubLogin.vue': PubLogin
 require! './components/PubSignup.vue': PubSignup
 require! './components/PubTaskCreator.vue': PubTaskCreator
@@ -22,8 +23,17 @@ router = new VueRouter!
 router.map do
   '/':
     component: PubHome
-  '/task':
-    component: PubTaskList
+  '/tasks':
+    component: PubTasks
+    sub-routes:
+      '/':
+        component: PubTasksPage
+      '/page/:page':
+        component: PubTasksPage
+      '/:keyword':
+        component: PubTasksPage
+      '/:keyword/page/:page':
+        component: PubTasksPage
   '/task/:id':
     component: PubTaskSingle
   '/login':
