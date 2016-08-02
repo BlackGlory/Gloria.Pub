@@ -23,12 +23,17 @@ export
       viewport-margin: Infinity
       read-only: @read-only
 
+    lock = false
+
     @$watch 'value', (->
-      @$data.editor.set-value @value
+      if not lock
+        @$data.editor.set-value @value
     ), immediate: true
 
     @$data.editor.on 'change', (cm) ~>
+      lock = true
       @value = cm.get-value!
+      lock = false
 </script>
 
 <style lang="sass">

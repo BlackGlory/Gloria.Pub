@@ -25,6 +25,8 @@
             </div>
           </div>
           <div class="hero-foot">
+            <p>Created: {{ created }}</p>
+            <p>Updated: {{ updated }}</p>
           </div>
         </article>
       </div>
@@ -46,6 +48,8 @@ export
     code: ''
     description: ''
     author: ''
+    created: ''
+    updated: ''
   components: {
     CodeMirror
   }
@@ -57,6 +61,11 @@ export
       @$data.description = task.description
       @$data.author = task.author
       @$data.id = task._id
+      @$data.created = task._created
+      @$data.updated = task._updated
+    .catch (status) ~>
+      switch status
+      | 404 => @$router.go '/tasks'
 </script>
 
 <style lang="sass">

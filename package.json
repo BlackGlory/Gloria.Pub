@@ -4,7 +4,7 @@
   "description": "A website to share your Gloria task.",
   "main": "build/app.html",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --content-base dev/",
+    "dev": "webpack-dev-server --port 3000 --inline --hot --content-base dev/",
     "build": "webpack --display-error-details",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

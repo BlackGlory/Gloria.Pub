@@ -1,61 +1,27 @@
-const DB_SERVER = 'http://gloria.pub:5984'
-
-function create-form-data kv
-  search-params = new URLSearchParams!
-  for k, v of kv
-    search-params.set k, v
-  search-params
+const API_SERVER = 'http://127.0.0.1:8080'
 
 function check-status res
   if 200 <= res.status < 300
     res
   else
-    res.json!
-    .then ({ reason }) ->
-      throw new Error reason
+    throw res.status
 
 function to-json res
   res.json!
 
-function get-uuid
+export function get-tasks
   new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/_uuids"
+    fetch "#{API_SERVER}/tasks",
+      credentials: 'include'
     .then check-status
     .then to-json
-    .then (x) -> x.uuids[0]
     .then resolve
-    .catch reject
-
-export function get-tasks-list
-  new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/gloria/_design/tasks/_view/list"
-    .then check-status
-    .then to-json
-    .then ({ rows }) ->
-      resolve rows
-    .catch reject
-
-export function get-tasks-by-time
-  new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/gloria/_design/tasks/_view/list"
-    .then check-status
-    .then to-json
-    .then ({ rows }) ->
-      resolve rows
-    .catch reject
-
-export function get-tasks-by-hot
-  new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/gloria/_design/tasks/_view/list"
-    .then check-status
-    .then to-json
-    .then ({ rows }) ->
-      resolve rows
     .catch reject
 
 export function get-task id
   new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/gloria/#{id}"
+    fetch "#{API_SERVER}/task/#{id}",
+      credentials: 'include'
     .then check-status
     .then to-json
     .then resolve
@@ -63,63 +29,54 @@ export function get-task id
 
 export function login name, password
   new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/_session",
+    fetch "#{API_SERVER}/session",
       credentials: 'include'
       method: 'POST'
-      body: create-form-data { name, password }
+      headers:
+        'Content-Type': 'application/json'
+      body: JSON.stringify { name, password }
     .then check-status
     .then resolve
     .catch reject
 
 export function sign-up name, password
   new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/_users/org.couchdb.user:#{name}",
+    fetch "#{API_SERVER}/user",
       credentials: 'include'
-      method: 'PUT'
+      method: 'POST'
       headers:
-        Authorization: '""'
-      body: JSON.stringify { name, password, roles: [], type: 'user', '_id': "org.couchdb.user:#{name}" }
+        'Content-Type': 'application/json'
+      body: JSON.stringify { name, password }
     .then check-status
     .then resolve
     .catch reject
 
 export function logout
   new Promise (resolve, reject) ->
-    fetch "#{DB_SERVER}/_session",
+    fetch "#{API_SERVER}/session",
       credentials: 'include'
-      headers:
-        Authorization: '""'
       method: 'DELETE'
     .then check-status
     .then resolve
     .catch reject
 
-export function heartbeat
-  fetch "#{DB_SERVER}/_session",
-    credentials: 'include'
-  .then check-status
-
-function get-user-name
+export function get-info
   new Promise (resolve, reject) ->
-    heartbeat!
+    fetch "#{API_SERVER}/session",
+      credentials: 'include'
+    .then check-status
     .then to-json
-    .then ({ user-ctx: { name } }) -> name
     .then resolve
     .catch reject
 
-export function create name, code, description
+export function create-task name, code, description
   new Promise (resolve, reject) ->
-    get-user-name!
-    .then (author) ->
-      fetch "#{DB_SERVER}/gloria/",
-        credentials: 'include'
-        headers:
-          'Authorization': '""'
-          'Content-Type': 'application/json'
-        method: 'POST'
-        body: JSON.stringify { name, code, author, description }
+    fetch "#{API_SERVER}/task/",
+      method: 'POST'
+      headers:
+        'Content-Type': 'application/json'
+      body: JSON.stringify { name, code, description }
     .then check-status
     .then to-json
-    .then ({ id }) ->
-      resolve id
+    .then ({ id }) -> resolve id
     .catch reject

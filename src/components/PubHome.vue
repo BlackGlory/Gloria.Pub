@@ -55,27 +55,16 @@
     <section class="section">
       <div class="container">
         <h2 class="title">
-          Hot task
-        </h2>
-        <pub-table :items="newList"></pub-table>
-      </div>
-    </section>
-
-    <hr class="is-marginless">
-
-    <section class="section">
-      <div class="container">
-        <h2 class="title">
           New task
         </h2>
-        <pub-table :items="hotList"></pub-table>
+        <pub-table :items="list"></pub-table>
       </div>
     </section>
 
     <section class="hero is-primary is-bold">
       <div class="hero-body">
         <div class="container has-text-centered">
-          <p class="title"><strong><a href="">Click to contribute your task</a></strong></p>
+          <p class="title"><strong><a v-link="'create'">Click to contribute your task</a></strong></p>
         </div>
       </div>
     </section>
@@ -86,24 +75,19 @@
 'use strict'
 
 require! './PubTable.vue': PubTable
-require! '../utils.ls': { get-tasks-by-time, get-tasks-by-hot }
+require! '../utils.ls': { get-tasks }
 
 export
   name: 'pub-home'
   data: ->
-    hot-list: []
-    new-list: []
+    list: []
   components: {
     PubTable
   }
   created: ->
-    get-tasks-by-time!
-    .then (new-list) ~>
-      @$data.new-list = new-list
-
-    get-tasks-by-hot!
-    .then (hot-list) ~>
-      @$data.hot-list = hot-list
+    get-tasks!
+    .then ({ list }) ~>
+      @$data.list = list
 </script>
 
 <style lang="sass">

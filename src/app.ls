@@ -33,8 +33,4 @@ router.map do
   '/create':
     component: PubTaskCreator
 
-router.before-each (transition) ->
-  heartbeat!
-  transition.next!
-
 router.start PubApp, '#app'

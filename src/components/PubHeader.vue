@@ -52,14 +52,15 @@
 <script lang="livescript">
 'use strict'
 
-require! '../utils.ls': { logout }
+require! '../utils.ls': { logout, get-info }
 
 export
   name: 'pub-header'
   methods:
     logout: ->
       logout!
-      .then (x) -> console.log x
+      .then (x) ~>
+        @$router.go '/login'
 </script>
 
 <style lang="sass">
