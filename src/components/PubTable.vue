@@ -29,7 +29,7 @@ export
   props:
     items:
       type: Array
-      default: []
+      default: -> []
 </script>
 
 <style lang="sass">

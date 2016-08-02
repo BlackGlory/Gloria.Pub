@@ -14,6 +14,7 @@ require! './components/PubTasksPage.vue': PubTasksPage
 require! './components/PubLogin.vue': PubLogin
 require! './components/PubSignup.vue': PubSignup
 require! './components/PubTaskCreator.vue': PubTaskCreator
+require! './components/PubUser.vue': PubUser
 
 Vue.use VueRouter
 Vue.use Keen
@@ -42,5 +43,9 @@ router.map do
     component: PubSignup
   '/create':
     component: PubTaskCreator
+  '/user':
+    component: PubUser
+  '/user/:name':
+    component: PubUser
 
 router.start PubApp, '#app'

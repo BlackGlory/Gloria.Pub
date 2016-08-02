@@ -6,8 +6,8 @@
           <p class="control has-addons">
             <input class="input" type="text" v-model="keyword" placeholder="Find a task">
             <a class="button is-info" @click="search">Search</a>
+            <span>&nbsp;or&nbsp;<a v-link="'/create'" class="button">Create</a></span>
           </p>
-          <a v-link="'/create'" class="button">Create</a>
         </nav>
         <router-view></router-view>
       </div>

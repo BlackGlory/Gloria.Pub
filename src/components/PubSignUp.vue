@@ -38,6 +38,7 @@ export
         | otherwise => console.log status
       .then login name, password
       .then ~>
+        @$dispatch 'session-change'
         @$router.go '/tasks'
       .catch (status) ->
         switch status

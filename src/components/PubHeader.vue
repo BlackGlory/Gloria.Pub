@@ -22,19 +22,18 @@
           <a class="nav-item" v-link="'/tasks'">
             Tasks
           </a>
-          <a class="nav-item" v-link="'/docs'">
-            Documentation
+          <a v-show="session.name" class="nav-item" v-link="'/user'">
+            <i class="fa fa-user"></i>{{ session.name }}
           </a>
-          <a class="nav-item" href="//blog.gloria.pub">
-            Blog
-          </a>
-          <a class="nav-item" v-link="'/login'">
-            Login
-          </a>
-          <a class="nav-item" @click="logout">
+          <a v-show="session.name" class="nav-item" @click="logout">
             Logout
           </a>
-
+          <a v-show="!session.name" class="nav-item" v-link="'/login'">
+            Login
+          </a>
+          <a v-show="!session.name" class="nav-item" v-link="'/signup'">
+            Sign up
+          </a>
           <span class="nav-item">
             <a class="button is-info" href="//github.com/BlackGlory/Gloria">
               <span class="icon">
@@ -56,10 +55,13 @@ require! '../utils.ls': { logout, get-info }
 
 export
   name: 'pub-header'
+  props:
+    session: {}
   methods:
     logout: ->
       logout!
       .then (x) ~>
+        @$dispatch 'session-change'
         @$router.go '/login'
 </script>
 

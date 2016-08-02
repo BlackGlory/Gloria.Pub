@@ -38,6 +38,7 @@ export
       { name, password } = @$data
       login name, password
       .then ~>
+        @$dispatch 'session-change'
         @$router.go '/tasks'
       .catch (status) ->
         switch status

@@ -39,6 +39,25 @@ export function login name, password
     .then resolve
     .catch reject
 
+export function get-user name
+  new Promise (resolve, reject) ->
+    if name
+      fetch "#{API_SERVER}/user/#{name}",
+        credentials: 'include'
+      .then check-status
+      .then to-json
+      .then resolve
+      .catch reject
+    else
+      get-info!
+      .then ({ name }) ->
+        fetch "#{API_SERVER}/user/#{name}",
+          credentials: 'include'
+      .then check-status
+      .then to-json
+      .then resolve
+      .catch reject
+
 export function sign-up name, password
   new Promise (resolve, reject) ->
     fetch "#{API_SERVER}/user",
