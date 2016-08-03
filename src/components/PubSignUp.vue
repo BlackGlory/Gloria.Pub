@@ -10,6 +10,7 @@
             <input type="password" v-model="password" placeholder="password" class="input"/><i class="fa fa-lock"></i>
           </p>
           <p class="control">
+            <script src="https://www.google.com/recaptcha/api.js"></script>
             <a @click="signup" class="button is-success">Sign up</a><span> or <a v-link="'/login'" class="is-link align-bottom underline">Login</a></span>
           </p>
         </form>
@@ -21,7 +22,7 @@
 <script lang="livescript">
 'use strict'
 
-require! '../utils.ls': { sign-up, login }
+require! '../utils.ls': { sign-up, login, MessageBox }
 
 export
   name: 'pub-signup'
@@ -32,18 +33,14 @@ export
     signup: ->
       { name, password } = @$data
       sign-up name, password
-      .catch (status) ->
-        switch status
-        | 400 => alert 'unkown format'
-        | otherwise => console.log status
+      .catch ({ status, status-text }) ->
+        MessageBox 'Error', status-text
       .then login name, password
       .then ~>
         @$dispatch 'session-change'
         @$router.go '/tasks'
-      .catch (status) ->
-        switch status
-        | 400 => alert 'unkown format'
-        | otherwise => console.log status
+      .catch ({ status, status-text }) ->
+        MessageBox 'Error', status-text
 
 </script>
 

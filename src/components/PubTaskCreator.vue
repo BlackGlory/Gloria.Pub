@@ -24,7 +24,7 @@
 <script lang="livescript">
 'use strict'
 
-require! '../utils.ls': { create-task, get-info }
+require! '../utils.ls': { create-task, get-info, MessageBox }
 require! './CodeMirror.vue': CodeMirror
 
 export
@@ -46,10 +46,8 @@ export
       create-task @$data.name, @$data.code, @$data.description
       .then (id) ~>
         @$router.go "/task/#{id}"
-      .catch (status) ->
-        switch status
-        | 400 => alert 'unkonwn format'
-        | otherwise => console.log status
+      .catch ({ status, status-text }) ->
+        MessageBox 'Error', status-text
 </script>
 
 <style lang="sass">

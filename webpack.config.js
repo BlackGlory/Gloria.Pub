@@ -21,17 +21,19 @@ module.exports = {
       , { from: './node_modules/codemirror/mode/javascript/javascript.js', to: 'codemirror/mode' }
       ]
     , { ignore: ['*.ls', '*.vue', '*.map'] })
+    /*
   , new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       }
     })
+    */
   ]
 , module: {
     loaders: [
       { test: /\.ls$/, loader: 'livescript' }
     , { test: /\.vue$/, loader: 'vue' }
-    // , { test: /\.css$/, loader: 'css' }
+    , { test: /\.css$/, loader: 'style!css' }
     , { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "file" }
     , { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "file" }
     , { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "file" }

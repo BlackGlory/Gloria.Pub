@@ -20,7 +20,7 @@
 'use strict'
 
 require! './PubTable.vue': PubTable
-require! '../utils.ls': { get-user }
+require! '../utils.ls': { get-user, MessageBox }
 
 export
   name: 'pub-user'
@@ -35,10 +35,10 @@ export
     .then ({ name, tasks }) ~>
       @$data.list = tasks
       @$data.name = name
-    .catch (status) ~>
+    .catch ({ status, status-text }) ~>
       switch status
-      | 404 => @$route.go '/'
-      | otherwise => console.log status
+      | 404 => @$router.go '/'
+      | otherwise => MessageBox 'Error', status-text
 </script>
 
 <style lang="sass">

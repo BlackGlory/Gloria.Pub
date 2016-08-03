@@ -11,7 +11,7 @@
 require! './PubTable.vue': PubTable
 require! './PubTaskCreator.vue': PubTaskCreator
 require! './PubPagination.vue': PubPagination
-require! '../utils.ls': { get-tasks }
+require! '../utils.ls': { get-tasks, MessageBox }
 
 export
   name: 'pub-tasks-page'
@@ -28,13 +28,12 @@ export
       .then ({ pagination, list }) ~>
         @$data.list = list
         @$data.pagination = pagination
-      .catch (status) ~>
+      .catch ({ status, status-text }) ~>
         switch status
         | 404 =>
           @$data.list = []
           @$data.pagination = {}
-        | otherwise =>
-          console.error status
+        | otherwise => MessageBox 'Error', status-text
       transition.next!
 </script>
 

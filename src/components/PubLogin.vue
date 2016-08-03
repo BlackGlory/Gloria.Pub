@@ -21,7 +21,7 @@
 <script lang="livescript">
 'use strict'
 
-require! '../utils.ls': { login, get-info }
+require! '../utils.ls': { login, get-info, MessageBox }
 
 export
   name: 'pub-login'
@@ -40,11 +40,8 @@ export
       .then ~>
         @$dispatch 'session-change'
         @$router.go '/tasks'
-      .catch (status) ->
-        switch status
-        | 403 => alert 'password incorrect'
-        | 404 => alert 'user non-existed'
-        | otherwise => alert 'Unkown error'
+      .catch ({ status, status-text }) ->
+        MessageBox 'Error', status-text
 </script>
 
 <style lang="sass">

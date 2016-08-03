@@ -14,6 +14,7 @@ require! './components/PubTasksPage.vue': PubTasksPage
 require! './components/PubLogin.vue': PubLogin
 require! './components/PubSignup.vue': PubSignup
 require! './components/PubTaskCreator.vue': PubTaskCreator
+require! './components/PubTaskEditor.vue': PubTaskEditor
 require! './components/PubUser.vue': PubUser
 
 Vue.use VueRouter
@@ -37,6 +38,8 @@ router.map do
         component: PubTasksPage
   '/task/:id':
     component: PubTaskSingle
+  '/task/:id/edit':
+    component: PubTaskEditor
   '/login':
     component: PubLogin
   '/signup':

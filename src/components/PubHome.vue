@@ -12,7 +12,7 @@
         <iframe src="https://ghbtns.com/github-btn.html?user=BlackGlory&repo=Gloria&type=star&size=large" frameborder="0" scrolling="0" width="80px" height="30px"></iframe>
         <iframe src="https://ghbtns.com/github-btn.html?user=BlackGlory&repo=Gloria&type=fork&size=large" frameborder="0" scrolling="0" width="80px" height="30px"></iframe>
         <p class="hero-buttons">
-          <a class="button is-primary is-large" href="#">
+          <a class="button is-primary is-large" @click="install">
             <span class="icon">
               <i class="fa fa-download"></i>
             </span>
@@ -64,7 +64,7 @@
     <section class="hero is-primary is-bold">
       <div class="hero-body">
         <div class="container has-text-centered">
-          <p class="title"><strong><a v-link="'create'">Click to contribute your task</a></strong></p>
+          <p class="title"><strong><a v-link="'create'">Contribute your awesome task!</a></strong></p>
         </div>
       </div>
     </section>
@@ -75,7 +75,7 @@
 'use strict'
 
 require! './PubTable.vue': PubTable
-require! '../utils.ls': { get-tasks }
+require! '../utils.ls': { get-tasks, MessageBox }
 
 export
   name: 'pub-home'
@@ -88,6 +88,12 @@ export
     get-tasks!
     .then ({ list }) ~>
       @$data.list = list
+    .catch ({ status, status-text }) ->
+      if status isnt 404
+        MessageBox 'Error', status-text
+  methods:
+    install: ->
+      chrome.webstore.install!
 </script>
 
 <style lang="sass">

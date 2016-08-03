@@ -11,7 +11,7 @@
 
 require! './PubHeader.vue': PubHeader
 require! './PubFooter.vue': PubFooter
-require! '../utils.ls': { get-info }
+require! '../utils.ls': { get-info, MessageBox }
 
 export
   name: 'pub-app'
@@ -21,17 +21,17 @@ export
     PubHeader
     PubFooter
   }
-  ready: ->
+  created: ->
     @$dispatch 'session-change'
   events:
     'session-change': ->
       get-info!
       .then (session) ~>
         @$data.session = session
-      .catch (status) ~>
+      .catch ({ status, status-text }) ~>
         switch status
         | 404 => @$data.session = {}
-        | otherwise => console.error status
+        | otherwise => MessageBox 'Error', status-text
 </script>
 
 <style lang="sass">

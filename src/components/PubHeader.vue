@@ -4,8 +4,8 @@
       <div class="container">
         <div class="nav-left">
           <a class="nav-item" v-link="'/'">
-            <img src="/assets/images/icon-240.png" alt="Gloria logo">
-            Gloria
+            <img src="/assets/images/icon-240.png" alt="Gloria logo">&nbsp;
+            <span>Gloria</span>
           </a>
         </div>
 
@@ -17,13 +17,16 @@
             Tasks
           </a>
           <a v-show="session.name" class="nav-item" v-link="'/user'">
-            <i class="fa fa-user"></i>{{ session.name }}
+            <span class="icon">
+              <i class="fa fa-user"></i>
+            </span>
+            {{ session.name }}
           </a>
           <a v-show="session.name" class="nav-item" @click="logout">
-            Logout
+            Log out
           </a>
           <a v-show="!session.name" class="nav-item" v-link="'/login'">
-            Login
+            Log in
           </a>
           <a v-show="!session.name" class="nav-item" v-link="'/signup'">
             Sign up
@@ -45,7 +48,7 @@
 <script lang="livescript">
 'use strict'
 
-require! '../utils.ls': { logout, get-info }
+require! '../utils.ls': { logout, get-info, MessageBox }
 
 export
   name: 'pub-header'
@@ -57,6 +60,8 @@ export
       .then (x) ~>
         @$dispatch 'session-change'
         @$router.go '/login'
+      .catch ({ status, status-text }) ->
+        MessageBox 'Error', status-text
 </script>
 
 <style lang="sass">
