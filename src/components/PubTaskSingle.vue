@@ -20,7 +20,7 @@
                 <code-mirror :read-only="true" :value="code"></code-mirror>
               </div>
               <div class="column">
-                <a class="button is-primary is-large">Install</a>
+                <a class="button is-primary is-large" @click="install">Install</a>
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@
 'use strict'
 
 require! './CodeMirror.vue': CodeMirror
-require! '../utils.ls': { get-task }
+require! '../utils.ls': { get-task, send-to-extension }
 
 export
   name: 'pub-task-single'
@@ -53,6 +53,12 @@ export
   components: {
     CodeMirror
   }
+  methods:
+    install: ->
+      send-to-extension do
+        method: 'install'
+        name: @$data.name
+        code: @$data.code
   created: ->
     get-task @$route.params.id
     .then (task) ~>

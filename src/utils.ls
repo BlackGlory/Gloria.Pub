@@ -1,4 +1,5 @@
-const API_SERVER = 'http://127.0.0.1:8080'
+const API_SERVER = 'http://api.gloria.pub'
+const EXTENSION_ID = 'ilkfnahbpbmnejamfkccgmokfchiccfp'
 
 function check-status res
   if 200 <= res.status < 300
@@ -100,3 +101,7 @@ export function create-task name, code, description
     .then to-json
     .then ({ id }) -> resolve id
     .catch reject
+
+export function send-to-extension message
+  chrome.runtime.send-message EXTENSION_ID, message, (response) ->
+    alert 'success'

@@ -4,16 +4,10 @@
       <div class="container">
         <div class="nav-left">
           <a class="nav-item" v-link="'/'">
-            <img src="/assets/images/logo.png" alt="Gloria logo">
+            <img src="/assets/images/icon-240.png" alt="Gloria logo">
             Gloria
           </a>
         </div>
-
-        <span class="nav-toggle">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
 
         <div class="nav-right nav-menu">
           <a class="nav-item" v-link="'/'">

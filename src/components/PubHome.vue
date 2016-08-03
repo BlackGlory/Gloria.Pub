@@ -3,7 +3,7 @@
     <section class="hero has-text-centered">
       <div class="hero-body">
         <p id="icon">
-          <img src="/assets/images/logo.png" alt="Bulma: a modern CSS framework based on Flexbox">
+          <img src="/assets/images/icon-240.png">
         </p>
         <h1 class="title">Gloria</h1>
         <h2 class="subtitle">
