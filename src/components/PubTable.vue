@@ -46,7 +46,7 @@ export
     .catch ({ status, status-text }) ~>
       switch status
       | 404 => @$data.session = {}
-      | otherwise => MessageBox 'Error', status-text
+      | otherwise => MessageBox 'Error', status-text, 'error'
 </script>
 
 <style lang="sass">

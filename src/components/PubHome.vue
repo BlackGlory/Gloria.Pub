@@ -90,7 +90,7 @@ export
       @$data.list = list
     .catch ({ status, status-text }) ->
       if status isnt 404
-        MessageBox 'Error', status-text
+        MessageBox 'Error', status-text, 'error'
   methods:
     install: ->
       chrome.webstore.install!

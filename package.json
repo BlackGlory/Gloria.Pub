@@ -19,6 +19,8 @@
     "codemirror": "^5.17.0",
     "font-awesome": "^4.6.3",
     "vue": "^1.0.26",
+    "vue-disqus": "git://github.com/BlackGlory/vue-disqus.git",
+    "vue-loading": "^0.1.4",
     "vue-msgbox": "^0.2.11",
     "vue-router": "^0.7.13"
   },

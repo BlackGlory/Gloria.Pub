@@ -33,7 +33,7 @@ export
         | 404 =>
           @$data.list = []
           @$data.pagination = {}
-        | otherwise => MessageBox 'Error', status-text
+        | otherwise => MessageBox 'Error', status-text, 'error'
       transition.next!
 </script>
 

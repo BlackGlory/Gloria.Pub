@@ -1,7 +1,6 @@
 'use strict'
 
 require! 'vue':Vue
-require! 'keen-ui':Keen
 require! 'vue-router': VueRouter
 
 require! './utils.ls': { heartbeat }
@@ -18,7 +17,6 @@ require! './components/PubTaskEditor.vue': PubTaskEditor
 require! './components/PubUser.vue': PubUser
 
 Vue.use VueRouter
-Vue.use Keen
 
 router = new VueRouter!
 

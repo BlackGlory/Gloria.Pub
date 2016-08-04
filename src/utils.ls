@@ -93,4 +93,18 @@ export function update-task id, name, code, description
 
 export function send-to-extension message
   chrome.runtime.send-message EXTENSION_ID, message, (response) ->
-    alert 'success'
+    MessageBox 'Excited!', 'Task Installed', 'success'
+
+export function remove-task id
+  fetch "#{API_SERVER}/task/#{id}",
+    credentials: 'include'
+    method: 'DELETE'
+
+export function update-user name, info
+  fetch "#{API_SERVER}/user/#{name}",
+    credentials: 'include'
+    method: 'PUT'
+    headers:
+      'Content-Type': 'application/json'
+    body: JSON.stringify info
+  .then check-status

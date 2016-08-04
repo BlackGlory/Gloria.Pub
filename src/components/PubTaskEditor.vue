@@ -45,7 +45,7 @@ export
       .catch ({ status, status-text }) ~>
         switch status
         | 404 => @$router.go '/tasks'
-        | otherwise => MessageBox 'Error', status-text
+        | otherwise => MessageBox 'Error', status-text, 'error'
   ready: ->
     get-info!
     .catch ~>
@@ -62,7 +62,7 @@ export
     .catch ({ status, status-text }) ~>
       switch status
       | 404 => @$router.go '/tasks'
-      | otherwise => MessageBox 'Error', status-text
+      | otherwise => MessageBox 'Error', status-text, 'error'
 </script>
 
 <style lang="sass">
