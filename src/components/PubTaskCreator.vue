@@ -1,5 +1,5 @@
 <template>
-  <div class="pub-task-creator">
+  <div class="pub-task-creator" v-loading="isLoading">
     <div class="section">
       <div class="container">
         <form class="control">
@@ -26,13 +26,18 @@
 
 require! '../utils.ls': { create-task, get-info, MessageBox }
 require! './CodeMirror.vue': CodeMirror
+require! 'vue-loading': { default: loading }
 
 export
   name: 'pub-task-creator'
+  directives: {
+    loading
+  }
   data: ->
     name: ''
     code: ''
     description: ''
+    is-loading: false
   components: {
     CodeMirror
   }
@@ -43,11 +48,14 @@ export
       @$router.go "/login"
   methods:
     create: ->
+      @$data.is-loading = true
       create-task @$data.name, @$data.code, @$data.description
       .then (id) ~>
         @$router.go "/task/#{id}"
-      .catch ({ status, status-text }) ->
+        @$data.is-loading = false
+      .catch ({ status, status-text }) ~>
         MessageBox 'Error', status-text, 'error'
+        @$data.is-loading = false
 </script>
 
 <style lang="sass">

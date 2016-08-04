@@ -1,8 +1,8 @@
 <template>
-  <div class="pub-login">
+  <div class="pub-login" v-loading="isLoading">
     <div class="container">
       <div class="box">
-        <form class="control" v-loading="isLoading">
+        <form class="control">
           <p class="control has-icon">
             <input type="text" v-model="name" name="name" placeholder="name" class="input"/><i class="fa fa-user"></i>
           </p>
@@ -22,7 +22,7 @@
 'use strict'
 
 require! '../utils.ls': { login, get-info, MessageBox }
-require! 'vue-loading': loading
+require! 'vue-loading': { default: loading }
 
 export
   name: 'pub-login'
@@ -32,12 +32,14 @@ export
   data: ->
     name: ''
     password: ''
-    is-loading: true
+    is-loading: false
   created: ->
     get-info!
     .then ({ name }) ~>
-      alert 'you have logged'
       @$router.go '/tasks'
+    .catch ({ status, status-text }) ->
+      if status isnt 404
+        MessageBox 'Error', status-text, 'error'
   methods:
     login: ->
       @$data.is-loading = true
@@ -47,7 +49,7 @@ export
         @$dispatch 'session-change'
         @$router.go '/tasks'
         @$data.is-loading = false
-      .catch ({ status, status-text }) ->
+      .catch ({ status, status-text }) ~>
         MessageBox 'Error', status-text, 'error'
         @$data.is-loading = false
 </script>

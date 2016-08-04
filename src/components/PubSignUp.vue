@@ -1,5 +1,5 @@
 <template>
-  <div class="pub-signup">
+  <div class="pub-signup" v-loading="isLoading">
     <div class="container">
       <div class="box">
         <form class="control">
@@ -22,24 +22,33 @@
 'use strict'
 
 require! '../utils.ls': { sign-up, login, MessageBox }
+require! 'vue-loading': { default: loading }
 
 export
   name: 'pub-signup'
+  directives: {
+    loading
+  }
   data: ->
     name: ''
     password: ''
+    is-loading: false
   methods:
     signup: ->
+      @$data.is-loading = true
       { name, password } = @$data
       sign-up name, password
-      .catch ({ status, status-text }) ->
+      .catch ({ status, status-text }) ~>
         MessageBox 'Error', status-text, 'error'
+        @$data.is-loading = false
       .then login name, password
       .then ~>
         @$dispatch 'session-change'
         @$router.go '/tasks'
-      .catch ({ status, status-text }) ->
+        @$data.is-loading = false
+      .catch ({ status, status-text }) ~>
         MessageBox 'Error', status-text, 'error'
+        @$data.is-loading = false
 
 </script>
 
