@@ -73,11 +73,11 @@ export
         code: @$data.code
     remove: ->
       MessageBox.confirm 'Are you sure to delete this task?'
-      .then ->
+      .then ~>
         remove-task @$route.params.id
-        .then ~> @$router.go '/users'
+        .then ~> @$router.go '/user'
         .catch ({ status, status-text }) ->
-          MessageBox 'Error', status-text
+          MessageBox "Error #{status}", status-text
   created: ->
     get-task @$route.params.id
     .then (task) ~>
@@ -91,7 +91,7 @@ export
     .catch ({ status, status-text }) ~>
       switch status
       | 404 => @$router.go '/tasks'
-      | otherwise => MessageBox 'Error', status-text, 'error'
+      | otherwise => MessageBox "Error #{status}", status-text, 'error'
     .then get-info
     .then ({ name }) ~>
       if name is @$data.author
@@ -99,7 +99,7 @@ export
     .catch ({ status, status-text }) ~>
       switch status
       | 404 => @$data.session = {}
-      | otherwise => MessageBox 'Error', status-text, 'error'
+      | otherwise => MessageBox "Error #{status}", status-text, 'error'
 </script>
 
 <style lang="sass">

@@ -1,4 +1,4 @@
-const API_SERVER = 'http://api.gloria.pub'
+const API_SERVER = 'http://localhost:8080'# 'http://api.gloria.pub'
 const EXTENSION_ID = 'cnelmenogjgobndnoddckekbojgginbn'
 
 require! 'vue-msgbox': { default: MessageBox }
@@ -8,10 +8,27 @@ function check-status res
   if 200 <= res.status < 300
     res
   else
-    throw res
+    res.text()
+    .then (message) ->
+      throw status: res.status, status-text: message
 
 function to-json res
   res.json!
+
+export function is-user-name val
+  /^[\d\w\-_]{6,16}$/.test val
+
+export function is-task-name val
+  1 <= val.length <= 30
+
+export function is-password val
+  8 <= val.length <= 16
+
+export function is-description val
+  0 <= val.length <= 300
+
+export function is-code val
+  (val.indexOf 'commit') isnt -1
 
 export MessageBox
 
@@ -27,13 +44,13 @@ export function get-task id
   .then check-status
   .then to-json
 
-export function login name, password
+export function login name, password, captcha
   fetch "#{API_SERVER}/session",
     credentials: 'include'
     method: 'POST'
     headers:
       'Content-Type': 'application/json'
-    body: JSON.stringify { name, password }
+    body: JSON.stringify { name, password, captcha }
   .then check-status
 
 export function get-user name
@@ -50,13 +67,13 @@ export function get-user name
     .then check-status
     .then to-json
 
-export function sign-up name, password
+export function sign-up name, password, captcha
   fetch "#{API_SERVER}/user",
     credentials: 'include'
     method: 'POST'
     headers:
       'Content-Type': 'application/json'
-    body: JSON.stringify { name, password }
+    body: JSON.stringify { name, password, captcha }
   .then check-status
 
 export function logout
@@ -108,3 +125,6 @@ export function update-user name, info
       'Content-Type': 'application/json'
     body: JSON.stringify info
   .then check-status
+
+export function get-captcha
+  "#{API_SERVER}/captcha?t=#{Date.now!}"

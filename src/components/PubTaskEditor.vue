@@ -44,15 +44,29 @@ export
   }
   methods:
     save: ->
+      { id, name, code, description } = @$data
+
+      unless is-task-name name
+        MessageBox 'Error', 'Name must be 1-30 characters.', 'error'
+        return
+
+      unless is-code code
+        MessageBox 'Error', 'Code must contains "commit".', 'error'
+        return
+
+      unless is-description description
+        MessageBox 'Error', 'description must be 0-300 characters.', 'error'
+        return
+
       @$data.is-loading = true
-      update-task @$data.id, @$data.name, @$data.code, @$data.description
+      update-task id, name, code, description
       .then ~>
-        @$router.go "/task/#{@$data.id}"
+        @$router.go "/task/#{id}"
         @$data.is-loading = false
       .catch ({ status, status-text }) ~>
         switch status
         | 404 => @$router.go '/tasks'
-        | otherwise => MessageBox 'Error', status-text, 'error'
+        | otherwise => MessageBox "Error #{status}", status-text, 'error'
         @$data.is-loading = false
   ready: ->
     get-info!
@@ -72,7 +86,7 @@ export
     .catch ({ status, status-text }) ~>
       switch status
       | 404 => @$router.go '/tasks'
-      | otherwise => MessageBox 'Error', status-text, 'error'
+      | otherwise => MessageBox "Error #{status}", status-text, 'error'
       @$data.is-loading = false
 </script>
 

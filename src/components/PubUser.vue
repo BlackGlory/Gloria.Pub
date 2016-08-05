@@ -57,24 +57,30 @@ export
   }
   methods:
     update-password: ->
-      if @$data.old-password
-        if @$data.new-password is @$data.confirm-password
+      { old-password, new-password, confirm-password } = @$data
+
+      unless is-password new-password
+        MessageBox "Error", 'Password must be 8-16 characters.', 'error'
+        return
+
+      if old-password
+        if new-password is confirm-password
           @$data.is-loading = true
           get-info!
           .then ({ name }) ~>
             update-user name, do
-              password: @$data.old-password
-              new-password: @$data.new-password
+              password: old-password
+              new-password: new-password
           .then ->
             MessageBox 'Excited!', 'Your new password has been available.', 'success'
             @$data.is-loading = false
           .catch ({ status, status-text }) ->
-            MessageBox 'Error', status-text, 'error'
+            MessageBox "Error #{status}", status-text, 'error'
             @$data.is-loading = false
         else
-          MessageBox 'Error', 'Different password of the two inputs.'
+          MessageBox "Error #{status}", 'Different password of the two inputs.'
       else
-        MessageBox 'Error', 'Old password is required.', 'error'
+        MessageBox "Error #{status}", 'Old password is required.', 'error'
   created: ->
     get-user @$route.params.user
     .then ({ name, tasks }) ~>
@@ -83,7 +89,7 @@ export
     .catch ({ status, status-text }) ~>
       switch status
       | 404 => @$router.go '/'
-      | otherwise => MessageBox 'Error', status-text, 'error'
+      | otherwise => MessageBox "Error #{status}", status-text, 'error'
 </script>
 
 <style lang="sass">

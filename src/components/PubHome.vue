@@ -90,15 +90,17 @@ export
       @$data.list = list
     .catch ({ status, status-text }) ->
       if status isnt 404
-        MessageBox 'Error', status-text, 'error'
+        MessageBox "Error #{status}", status-text, 'error'
   methods:
     install: ->
-      chrome.webstore.install!
+      if chrome.webstore.install
+        chrome.webstore.install!
+      else
+        window.open 'https://chrome.google.com/webstore/detail/gloria/cnelmenogjgobndnoddckekbojgginbn'
 </script>
 
 <style lang="sass">
 #icon
-  border-radius: 20px
   box-shadow: 0 20px 60px rgba(17, 17, 17, 0.05), 0 5px 10px rgba(17, 17, 17, 0.1), 0 1px 1px rgba(17, 17, 17, 0.2)
   display: inline-block
   height: 240px

@@ -40,7 +40,7 @@ export
         | 404 =>
           @$data.list = []
           @$data.pagination = {}
-        | otherwise => MessageBox 'Error', status-text, 'error'
+        | otherwise => MessageBox "Error #{status}", status-text, 'error'
         @$data.is-loading = false
       transition.next!
 </script>
