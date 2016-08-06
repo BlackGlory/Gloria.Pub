@@ -1,4 +1,4 @@
-const API_SERVER = 'http://api.gloria.pub'
+const API_SERVER = 'https://api.gloria.pub'
 const EXTENSION_ID = 'cnelmenogjgobndnoddckekbojgginbn'
 
 require! 'vue-msgbox': { default: MessageBox }
