@@ -18,7 +18,7 @@ require! './components/PubUser.vue': PubUser
 
 Vue.use VueRouter
 
-router = new VueRouter!
+router = new VueRouter history: true
 
 router.map do
   '/':
