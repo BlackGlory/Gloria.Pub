@@ -3,8 +3,6 @@
 require! 'vue':Vue
 require! 'vue-router': VueRouter
 
-require! './utils.ls': { heartbeat }
-
 require! './components/PubApp.vue': PubApp
 require! './components/PubHome.vue': PubHome
 require! './components/PubTaskSingle.vue': PubTaskSingle
