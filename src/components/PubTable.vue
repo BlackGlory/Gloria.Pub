@@ -18,7 +18,9 @@
               </span>
             </td>
             <td>{{ item.description }}</td>
-            <td>{{ item.author }}</td>
+            <td>
+              <a v-link="'/user/' + item.author">{{ item.author }}</a>
+            </td>
           </tr>
         </template>
       </tbody>

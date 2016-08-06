@@ -11,7 +11,7 @@
           <div class="hero-body">
             <pub-table :items="list"></pub-table>
           </div>
-          <div class="hero-foot" v-show="!$route.params.user" v-loading="isLoading">
+          <div class="hero-foot" v-show="!$route.params.name" v-loading="isLoading">
             <h2 class="title">Change password</h2>
             <form class="control">
               <p class="control has-icon">
@@ -82,7 +82,7 @@ export
       else
         MessageBox "Error #{status}", 'Old password is required.', 'error'
   created: ->
-    get-user @$route.params.user
+    get-user @$route.params.name
     .then ({ name, tasks }) ~>
       @$data.list = tasks
       @$data.name = name

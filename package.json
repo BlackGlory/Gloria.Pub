@@ -5,7 +5,7 @@
   "main": "build/app.html",
   "scripts": {
     "dev": "webpack-dev-server --port 3000 --inline --hot --content-base dev/",
-    "build": "webpack --display-error-details",
+    "build": "webpack --config webpack.prod.js --display-error-details",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,7 +21,7 @@
     "vue": "^1.0.26",
     "vue-disqus": "^1.0.2",
     "vue-loading": "^0.1.4",
-    "vue-msgbox": "^0.2.11",
+    "vue-msgbox": "git://github.com/BlackGlory/vue-msgbox.git",
     "vue-router": "^0.7.13"
   },
   "devDependencies": {

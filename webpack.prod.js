@@ -21,6 +21,16 @@ module.exports = {
       , { from: './node_modules/codemirror/mode/javascript/javascript.js', to: 'codemirror/mode' }
       ]
     , { ignore: ['*.ls', '*.vue', '*.map'] })
+  , new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
+    })
+  , new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
   ]
 , module: {
     loaders: [

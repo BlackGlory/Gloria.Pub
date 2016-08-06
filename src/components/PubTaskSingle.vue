@@ -14,7 +14,7 @@
               </span>
             </h1>
             <h2 class="subtitle">
-              <i class="fa fa-user"></i> {{ author }}
+              <i class="fa fa-user"></i>&nbsp;<a class="default-color" v-link="'/user/' + author">{{ author }}</a>
             </h2>
             <h3 class="subtitle">
               {{ description }}
@@ -103,4 +103,6 @@ export
 </script>
 
 <style lang="sass">
+.default-color
+  color: inherit
 </style>
