@@ -11,7 +11,6 @@ module.exports = {
   , filename: '[name].js'
   , publicPath: '/'
   }
-, devtool: 'source-map'
 , plugins: [
     new CopyWebpackPlugin(
       [
