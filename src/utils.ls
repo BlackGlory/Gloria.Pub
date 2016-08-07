@@ -97,7 +97,7 @@ export function create-task name, code, description
     body: JSON.stringify { name, code, description }
   .then check-status
   .then to-json
-  .then ({ id }) -> resolve id
+  .then ({ id }) -> id
 
 export function update-task id, name, code, description
   fetch "#{API_SERVER}/task/#{id}",
