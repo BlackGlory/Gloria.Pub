@@ -37,7 +37,7 @@
 'use strict'
 
 require! './PubTable.vue': PubTable
-require! '../utils.ls': { get-user, MessageBox }
+require! '../utils.ls': { get-user, MessageBox, is-password }
 require! 'vue-loading': { default: loading }
 
 export

@@ -24,7 +24,7 @@
 <script lang="livescript">
 'use strict'
 
-require! '../utils.ls': { update-task, get-info, get-task, MessageBox }
+require! '../utils.ls': { update-task, get-info, get-task, MessageBox, is-task-name, is-code, is-description }
 require! './CodeMirror.vue': CodeMirror
 require! 'vue-loading': { default: loading }
 

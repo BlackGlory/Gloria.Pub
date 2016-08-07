@@ -62,7 +62,7 @@ export
       .then login name, password
       .then ~>
         @$dispatch 'session-change'
-        @$router.go '/tasks'
+        @$router.go '/login'
         @$data.is-loading = false
       .catch ({ status, status-text }) ~>
         MessageBox "Error #{status}", status-text, 'error'
