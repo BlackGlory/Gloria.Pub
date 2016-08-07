@@ -89,8 +89,9 @@ export
     .then ({ list }) ~>
       @$data.list = list
     .catch ({ status, status-text }) ->
-      if status isnt 404
+      if status and status isnt 404
         MessageBox "Error #{status}", status-text, 'error'
+      else throw arguments
   methods:
     install: ->
       if chrome.webstore.install

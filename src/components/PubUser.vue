@@ -75,8 +75,10 @@ export
             MessageBox 'Excited!', 'Your new password has been available.', 'success'
             @$data.is-loading = false
           .catch ({ status, status-text }) ->
-            MessageBox "Error #{status}", status-text, 'error'
-            @$data.is-loading = false
+            if status
+              MessageBox "Error #{status}", status-text, 'error'
+              @$data.is-loading = false
+            else throw arguments
         else
           MessageBox "Error #{status}", 'Different password of the two inputs.'
       else
@@ -87,9 +89,11 @@ export
       @$data.list = tasks
       @$data.name = name
     .catch ({ status, status-text }) ~>
-      switch status
-      | 404 => @$router.go '/'
-      | otherwise => MessageBox "Error #{status}", status-text, 'error'
+      if status
+        switch status
+        | 404 => @$router.go '/'
+        | otherwise => MessageBox "Error #{status}", status-text, 'error'
+      else throw arguments
 </script>
 
 <style lang="sass">

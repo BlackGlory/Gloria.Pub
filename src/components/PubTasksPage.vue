@@ -36,12 +36,14 @@ export
         @$data.pagination = pagination
         @$data.is-loading = false
       .catch ({ status, status-text }) ~>
-        switch status
-        | 404 =>
-          @$data.list = []
-          @$data.pagination = {}
-        | otherwise => MessageBox "Error #{status}", status-text, 'error'
-        @$data.is-loading = false
+        if status
+          switch status
+          | 404 =>
+            @$data.list = []
+            @$data.pagination = {}
+          | otherwise => MessageBox "Error #{status}", status-text, 'error'
+          @$data.is-loading = false
+        else throw arguments
       transition.next!
 </script>
 

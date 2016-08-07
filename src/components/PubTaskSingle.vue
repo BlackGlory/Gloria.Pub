@@ -77,7 +77,9 @@ export
         remove-task @$route.params.id
         .then ~> @$router.go '/user'
         .catch ({ status, status-text }) ->
-          MessageBox "Error #{status}", status-text
+          if status
+            MessageBox "Error #{status}", status-text
+          else throw arguments
   created: ->
     get-task @$route.params.id
     .then (task) ~>
@@ -89,17 +91,21 @@ export
       @$data.created = new Date task._created
       @$data.updated = new Date task._updated
     .catch ({ status, status-text }) ~>
-      switch status
-      | 404 => @$router.go '/tasks'
-      | otherwise => MessageBox "Error #{status}", status-text, 'error'
+      if status
+        switch status
+        | 404 => @$router.go '/tasks'
+        | otherwise => MessageBox "Error #{status}", status-text, 'error'
+      else throw arguments
     .then get-info
     .then ({ name }) ~>
       if name is @$data.author
         @$data.editable = true
     .catch ({ status, status-text }) ~>
-      switch status
-      | 404 => @$data.session = {}
-      | otherwise => MessageBox "Error #{status}", status-text, 'error'
+      if status
+        switch status
+        | 404 => @$data.session = {}
+        | otherwise => MessageBox "Error #{status}", status-text, 'error'
+      else throw arguments
 </script>
 
 <style lang="sass">

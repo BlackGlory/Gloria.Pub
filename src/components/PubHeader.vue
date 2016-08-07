@@ -61,7 +61,9 @@ export
         @$dispatch 'session-change'
         @$router.go '/login'
       .catch ({ status, status-text }) ->
-        MessageBox "Error #{status}", status-text, 'error'
+        if status
+          MessageBox "Error #{status}", status-text, 'error'
+        else throw arguments
 </script>
 
 <style lang="sass">

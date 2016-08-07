@@ -56,18 +56,22 @@ export
       @$data.is-loading = true
       sign-up name, password, captcha
       .catch ({ status, status-text }) ~>
-        MessageBox "Error #{status}", status-text, 'error'
-        @$data.is-loading = false
-        @update-captcha!
+        if status
+          MessageBox "Error #{status}", status-text, 'error'
+          @$data.is-loading = false
+          @update-captcha!
+        else throw arguments
       .then login name, password
       .then ~>
         @$dispatch 'session-change'
         @$router.go '/login'
         @$data.is-loading = false
       .catch ({ status, status-text }) ~>
-        MessageBox "Error #{status}", status-text, 'error'
-        @$data.is-loading = false
-        @update-captcha!
+        if status
+          MessageBox "Error #{status}", status-text, 'error'
+          @$data.is-loading = false
+          @update-captcha!
+        else throw arguments
 
 </script>
 

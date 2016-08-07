@@ -44,8 +44,9 @@ export
     .then ({ name }) ~>
       @$router.go '/tasks'
     .catch ({ status, status-text }) ->
-      if status isnt 404
+      if status and status isnt 404
         MessageBox "Error #{status}", status-text, 'error'
+      else throw arguments
   methods:
     update-captcha: ->
       @$data.captcha-image = get-captcha!
@@ -58,9 +59,11 @@ export
         @$router.go '/tasks'
         @$data.is-loading = false
       .catch ({ status, status-text }) ~>
-        MessageBox "Error #{status}", status-text, 'error'
-        @$data.is-loading = false
-        @update-captcha!
+        if status
+          MessageBox "Error #{status}", status-text, 'error'
+          @$data.is-loading = false
+          @update-captcha!
+        else throw arguments
 </script>
 
 <style lang="sass">

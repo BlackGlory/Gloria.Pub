@@ -64,16 +64,19 @@ export
         @$router.go "/task/#{id}"
         @$data.is-loading = false
       .catch ({ status, status-text }) ~>
-        switch status
-        | 404 => @$router.go '/tasks'
-        | otherwise => MessageBox "Error #{status}", status-text, 'error'
-        @$data.is-loading = false
+        if status
+          switch status
+          | 404 => @$router.go '/tasks'
+          | otherwise => MessageBox "Error #{status}", status-text, 'error'
+          @$data.is-loading = false
+        else throw arguments
   ready: ->
     get-info!
-    .catch ~>
-      alert 'please login'
-      @$router.go "/login"
-    .then
+    .catch ({ status, status-text }) ~>
+      if status
+        alert 'please login'
+        @$router.go "/login"
+      else throw arguments
   created: ->
     @$data.is-loading = true
     get-task @$route.params.id
@@ -84,10 +87,12 @@ export
       @$data.id = task._id
       @$data.is-loading = false
     .catch ({ status, status-text }) ~>
-      switch status
-      | 404 => @$router.go '/tasks'
-      | otherwise => MessageBox "Error #{status}", status-text, 'error'
-      @$data.is-loading = false
+      if status
+        switch status
+        | 404 => @$router.go '/tasks'
+        | otherwise => MessageBox "Error #{status}", status-text, 'error'
+        @$data.is-loading = false
+      else throw arguments
 </script>
 
 <style lang="sass">

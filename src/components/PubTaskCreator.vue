@@ -43,9 +43,11 @@ export
   }
   ready: ->
     get-info!
-    .catch ~>
-      alert 'please login'
-      @$router.go "/login"
+    .catch ({ status, status-text })~>
+      if status and status is 404
+        alert 'Please login.'
+        @$router.go "/login"
+      else throw arguments
   methods:
     create: ->
       { name, code, description } = @$data
@@ -68,8 +70,10 @@ export
         @$router.go "/task/#{id}"
         @$data.is-loading = false
       .catch ({ status, status-text }) ~>
-        MessageBox "Error #{status}", status-text, 'error'
-        @$data.is-loading = false
+        if status
+          MessageBox "Error #{status}", status-text, 'error'
+          @$data.is-loading = false
+        else throw arguments
 </script>
 
 <style lang="sass">
