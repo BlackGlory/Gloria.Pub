@@ -9,18 +9,15 @@ module.exports = {
 , output: {
     path: path.join(__dirname, 'build')
   , filename: '[name].js'
+  , publicPath: '/'
   }
 , devtool: 'source-map'
 , plugins: [
     new CopyWebpackPlugin(
       [
         { from: './src' }
-      , { from: './node_modules/codemirror/lib/codemirror.css', to: 'codemirror' }
-      , { from: './node_modules/codemirror/theme/monokai.css', to: 'codemirror' }
-      , { from: './node_modules/codemirror/lib/codemirror.js', to: 'codemirror' }
-      , { from: './node_modules/codemirror/mode/javascript/javascript.js', to: 'codemirror/mode' }
       ]
-    , { ignore: ['*.ls', '*.vue', '*.map'] })
+    , { ignore: ['*.ls', '*.vue'] })
   , new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'

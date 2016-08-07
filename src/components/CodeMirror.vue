@@ -7,6 +7,11 @@
 <script lang="livescript">
 'use strict'
 
+require! 'codemirror/lib/codemirror.css'
+require! 'codemirror/theme/monokai.css'
+require! 'codemirror/lib/codemirror.js': CodeMirror
+require! 'codemirror/mode/javascript/javascript.js'
+
 export
   name: 'code-mirror'
   props:
@@ -34,6 +39,6 @@ export
 
 <style lang="sass">
 .CodeMirror
-  height: auto
+  height: auto !important
   border: 1px solid #eee
 </style>
