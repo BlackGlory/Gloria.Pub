@@ -57,7 +57,7 @@
         <h2 class="title">
           New task
         </h2>
-        <pub-table :items="list"></pub-table>
+        <pub-table v-loading="isLoading" :loading-options="{ bg: 'transparent' }" :items="list"></pub-table>
       </div>
     </section>
 
@@ -76,19 +76,27 @@
 
 require! './PubTable.vue': PubTable
 require! '../utils.ls': { get-tasks, MessageBox }
+require! 'vue-loading': { default: loading }
 
 export
   name: 'pub-home'
+  directives: {
+    loading
+  }
   data: ->
     list: []
+    is-loading: false
   components: {
     PubTable
   }
   created: ->
+    @$data.is-loading = true
     get-tasks!
     .then ({ list }) ~>
+      @$data.is-loading = false
       @$data.list = list
     .catch ({ status, status-text }) ->
+      @$data.is-loading = false
       if status and status isnt 404
         MessageBox "Error #{status}", status-text, 'error'
       else throw arguments

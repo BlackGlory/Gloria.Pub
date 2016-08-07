@@ -2,7 +2,7 @@
   <div class="pub-task-single">
     <div class="section">
       <div class="container">
-        <article class="hero">
+        <article class="hero" v-loading="isLoading" :loading-options="{ bg: 'transparent' }">
           <div class="hero-head">
             <h1 class="title">
               {{ name }}
@@ -47,9 +47,13 @@
 require! './CodeMirror.vue': CodeMirror
 require! './PubComment.vue': PubComment
 require! '../utils.ls': { get-task, send-to-extension, get-info, MessageBox, remove-task }
+require! 'vue-loading': { default: loading }
 
 export
   name: 'pub-task-single'
+  directives: {
+    loading
+  }
   data: ->
     id: ''
     name: ''
@@ -59,6 +63,7 @@ export
     created: ''
     updated: ''
     editable: false
+    is-loading: false
   components: {
     CodeMirror
     PubComment
@@ -81,8 +86,10 @@ export
             MessageBox "Error #{status}", status-text
           else throw arguments
   created: ->
+    @$data.is-loading = true
     get-task @$route.params.id
     .then (task) ~>
+      @$data.is-loading = false
       @$data.name = task.name
       @$data.code = task.code
       @$data.description = task.description
@@ -91,6 +98,7 @@ export
       @$data.created = new Date task._created
       @$data.updated = new Date task._updated
     .catch ({ status, status-text }) ~>
+      @$data.is-loading = false
       if status
         switch status
         | 404 => @$router.go '/tasks'

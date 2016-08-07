@@ -1,5 +1,5 @@
 <template>
-  <div class="pub-task-editor" v-loading="isLoading">
+  <div class="pub-task-editor" v-loading="isLoading" :loading-options="{ bg: 'transparent' }">
     <div class="section">
       <div class="container">
         <form class="control">
@@ -61,37 +61,37 @@ export
       @$data.is-loading = true
       update-task id, name, code, description
       .then ~>
-        @$router.go "/task/#{id}"
         @$data.is-loading = false
+        @$router.go "/task/#{id}"
       .catch ({ status, status-text }) ~>
+        @$data.is-loading = false
         if status
           switch status
           | 404 => @$router.go '/tasks'
           | otherwise => MessageBox "Error #{status}", status-text, 'error'
-          @$data.is-loading = false
         else throw arguments
-  ready: ->
+  created: ->
     get-info!
     .catch ({ status, status-text }) ~>
       if status
         alert 'please login'
         @$router.go "/login"
       else throw arguments
-  created: ->
+
     @$data.is-loading = true
     get-task @$route.params.id
     .then (task) ~>
+      @$data.is-loading = false
       @$data.name = task.name
       @$data.code = task.code
       @$data.description = task.description
       @$data.id = task._id
-      @$data.is-loading = false
     .catch ({ status, status-text }) ~>
+      @$data.is-loading = false
       if status
         switch status
         | 404 => @$router.go '/tasks'
         | otherwise => MessageBox "Error #{status}", status-text, 'error'
-        @$data.is-loading = false
       else throw arguments
 </script>
 

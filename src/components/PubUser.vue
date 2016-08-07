@@ -11,7 +11,7 @@
           <div class="hero-body">
             <pub-table :items="list"></pub-table>
           </div>
-          <div class="hero-foot" v-show="!$route.params.name" v-loading="isLoading">
+          <div class="hero-foot" v-show="!$route.params.name" v-loading="isLoading" :loading-options="{ bg: 'transparent' }">
             <h2 class="title">Change password</h2>
             <form class="control">
               <p class="control has-icon">
@@ -72,12 +72,12 @@ export
               password: old-password
               new-password: new-password
           .then ->
-            MessageBox 'Excited!', 'Your new password has been available.', 'success'
             @$data.is-loading = false
+            MessageBox 'Excited!', 'Your new password has been available.', 'success'
           .catch ({ status, status-text }) ->
+            @$data.is-loading = false
             if status
               MessageBox "Error #{status}", status-text, 'error'
-              @$data.is-loading = false
             else throw arguments
         else
           MessageBox "Error #{status}", 'Different password of the two inputs.'

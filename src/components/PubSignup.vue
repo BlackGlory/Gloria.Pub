@@ -1,5 +1,5 @@
 <template>
-  <div class="pub-signup" v-loading="isLoading">
+  <div class="pub-signup" v-loading="isLoading" :loading-options="{ bg: 'transparent' }">
     <div class="container">
       <div class="box">
         <form class="control">
@@ -56,20 +56,20 @@ export
       @$data.is-loading = true
       sign-up name, password, captcha
       .catch ({ status, status-text }) ~>
+        @$data.is-loading = false
         if status
           MessageBox "Error #{status}", status-text, 'error'
-          @$data.is-loading = false
           @update-captcha!
         else throw arguments
       .then login name, password
       .then ~>
+        @$data.is-loading = false
         @$dispatch 'session-change'
         @$router.go '/login'
-        @$data.is-loading = false
       .catch ({ status, status-text }) ~>
+        @$data.is-loading = false
         if status
           MessageBox "Error #{status}", status-text, 'error'
-          @$data.is-loading = false
           @update-captcha!
         else throw arguments
 

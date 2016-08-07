@@ -28,5 +28,4 @@ export
 .pub-footer
   height: 52px
   line-height: 52px
-  //background-color: white
 </style>

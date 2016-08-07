@@ -1,5 +1,5 @@
 <template>
-  <div class="pub-task-creator" v-loading="isLoading">
+  <div class="pub-task-creator" v-loading="isLoading" :loading-options="{ bg: 'transparent' }">
     <div class="section">
       <div class="container">
         <form class="control">
@@ -41,7 +41,7 @@ export
   components: {
     CodeMirror
   }
-  ready: ->
+  created: ->
     get-info!
     .catch ({ status, status-text })~>
       if status and status is 404
@@ -67,12 +67,12 @@ export
       @$data.is-loading = true
       create-task name, code, description
       .then (id) ~>
-        @$router.go "/task/#{id}"
         @$data.is-loading = false
+        @$router.go "/task/#{id}"
       .catch ({ status, status-text }) ~>
+        @$data.is-loading = false
         if status
           MessageBox "Error #{status}", status-text, 'error'
-          @$data.is-loading = false
         else throw arguments
 </script>
 

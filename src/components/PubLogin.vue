@@ -1,5 +1,5 @@
 <template>
-  <div class="pub-login" v-loading="isLoading">
+  <div class="pub-login" v-loading="isLoading" :loading-options="{ bg: 'transparent' }">
     <div class="container">
       <div class="box">
         <form class="control">
@@ -55,13 +55,13 @@ export
       { name, password, captcha } = @$data
       login name, password, captcha
       .then ~>
+        @$data.is-loading = false
         @$dispatch 'session-change'
         @$router.go '/tasks'
-        @$data.is-loading = false
       .catch ({ status, status-text }) ~>
+        @$data.is-loading = false
         if status
           MessageBox "Error #{status}", status-text, 'error'
-          @$data.is-loading = false
           @update-captcha!
         else throw arguments
 </script>
