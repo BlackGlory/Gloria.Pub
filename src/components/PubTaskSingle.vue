@@ -26,8 +26,8 @@
                 <code-mirror :read-only="true" :value="code"></code-mirror>
               </div>
               <div class="column">
-                <a class="button is-primary is-large" @click="install">Install</a>
-                <a class="button is-success is-large" @click="uninstall">Installed</a>
+                <a class="button is-primary is-large" v-show="!installed" @click="install">Install</a>
+                <a class="button is-success is-large" v-show="installed" @click="uninstall">Installed</a>
               </div>
             </div>
           </div>
@@ -137,8 +137,10 @@ export
         origin: gen-sign @$route.params.id
       .then ~>
         @$data.installed = true
+      /*
       .catch ->
         MessageBox 'Bad End', 'Check status fail, is Gloria enabled?', 'error'
+      */
 </script>
 
 <style lang="sass">
