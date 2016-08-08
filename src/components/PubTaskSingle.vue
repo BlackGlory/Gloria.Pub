@@ -79,12 +79,10 @@ export
         name: @$data.name
         code: @$data.code
         origin: gen-sign @$route.params.id
-      .then ->
+      .then ~>
         @$data.installed = true
         MessageBox 'Excited!', 'Task installed', 'success'
       .catch (error) ->
-        if error
-          console.log error
         MessageBox 'Bad End', 'Task install fail, is Gloria enabled?', 'error'
     uninstall: ->
       MessageBox.confirm 'Are you sure to uninstall this task?'
