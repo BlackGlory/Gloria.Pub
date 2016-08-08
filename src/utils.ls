@@ -109,8 +109,12 @@ export function update-task id, name, code, description
   .then check-status
 
 export function send-to-extension message
-  chrome.runtime.send-message EXTENSION_ID, message, (response) ->
-    MessageBox 'Excited!', 'Task Installed', 'success'
+  new Promise (resolve, reject) ->
+    chrome.runtime.send-message EXTENSION_ID, message, (response) ->
+      if response
+        resolve(response)
+      else
+        reject(response)
 
 export function remove-task id
   fetch "#{API_SERVER}/task/#{id}",
@@ -128,3 +132,6 @@ export function update-user name, info
 
 export function get-captcha
   "#{API_SERVER}/captcha?t=#{Date.now!}"
+
+export function gen-sign id
+  "gloria.pub@#{id}"

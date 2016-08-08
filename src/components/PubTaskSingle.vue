@@ -27,6 +27,7 @@
               </div>
               <div class="column">
                 <a class="button is-primary is-large" @click="install">Install</a>
+                <a class="button is-success is-large" @click="uninstall">Installed</a>
               </div>
             </div>
           </div>
@@ -46,7 +47,7 @@
 
 require! './CodeMirror.vue': CodeMirror
 require! './PubComment.vue': PubComment
-require! '../utils.ls': { get-task, send-to-extension, get-info, MessageBox, remove-task }
+require! '../utils.ls': { get-task, send-to-extension, get-info, MessageBox, remove-task, gen-sign }
 require! 'vue-loading': { default: loading }
 
 export
@@ -64,6 +65,7 @@ export
     updated: ''
     editable: false
     is-loading: false
+    installed: false
   components: {
     CodeMirror
     PubComment
@@ -76,6 +78,21 @@ export
         type: 'install'
         name: @$data.name
         code: @$data.code
+        origin: gen-sign @$route.params.id
+      .then ->
+        @$data.installed = true
+        MessageBox 'Excited!', 'Task installed', 'success'
+      .catch ->
+        MessageBox 'Bad End', 'Task install fail', 'error'
+    uninstall: ->
+      MessageBox.confirm 'Are you sure to uninstall this task?'
+      .then ~->
+        send-to-extension do
+          type: 'uninstall'
+          origin: gen-sign @$route.params.id
+        .then ~>
+          @$data.installed = false
+          MessageBox 'Excited!', 'Task uninstalled', 'success'
     remove: ->
       MessageBox.confirm 'Are you sure to delete this task?'
       .then ~>
@@ -114,6 +131,14 @@ export
         | 404 => @$data.session = {}
         | otherwise => MessageBox "Error #{status}", status-text, 'error'
       else throw arguments
+    .then ~>
+      send-to-extension do
+        type: 'is-exist'
+        origin: gen-sign @$route.params.id
+      .then ~>
+        @$data.installed = true
+      .catch ->
+        MessageBox 'Bad End', 'Check status fail, is Gloria enabled?', 'error'
 </script>
 
 <style lang="sass">
