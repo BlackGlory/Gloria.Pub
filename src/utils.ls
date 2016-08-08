@@ -112,9 +112,9 @@ export function send-to-extension message
   new Promise (resolve, reject) ->
     chrome.runtime.send-message EXTENSION_ID, message, (response) ->
       if response
-        resolve(response)
+        resolve response
       else
-        reject(response)
+        reject response
 
 export function remove-task id
   fetch "#{API_SERVER}/task/#{id}",
@@ -134,4 +134,4 @@ export function get-captcha
   "#{API_SERVER}/captcha?t=#{Date.now!}"
 
 export function gen-sign id
-  "//gloria.pub/task/#{id}"
+  "https://gloria.pub/task/#{id}"
