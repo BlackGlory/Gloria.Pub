@@ -134,4 +134,4 @@ export function get-captcha
   "#{API_SERVER}/captcha?t=#{Date.now!}"
 
 export function gen-sign id
-  "gloria.pub@#{id}"
+  "//gloria.pub/task/#{id}"

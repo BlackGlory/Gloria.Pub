@@ -83,16 +83,16 @@ export
         @$data.installed = true
         MessageBox 'Excited!', 'Task installed', 'success'
       .catch ->
-        MessageBox 'Bad End', 'Task install fail', 'error'
+        MessageBox 'Bad End', 'Task install fail, is Gloria enabled?', 'error'
     uninstall: ->
       MessageBox.confirm 'Are you sure to uninstall this task?'
       .then ~->
         send-to-extension do
           type: 'uninstall'
           origin: gen-sign @$route.params.id
-        .then ~>
-          @$data.installed = false
-          MessageBox 'Excited!', 'Task uninstalled', 'success'
+      .then ~>
+        @$data.installed = false
+        MessageBox 'Excited!', 'Task uninstalled', 'success'
     remove: ->
       MessageBox.confirm 'Are you sure to delete this task?'
       .then ~>
@@ -135,12 +135,10 @@ export
       send-to-extension do
         type: 'is-exist'
         origin: gen-sign @$route.params.id
-      .then ~>
-        @$data.installed = true
-      /*
-      .catch ->
-        MessageBox 'Bad End', 'Check status fail, is Gloria enabled?', 'error'
-      */
+    .then ~>
+      @$data.installed = true
+    .catch ~>
+      @$data.installed = false
 </script>
 
 <style lang="sass">
