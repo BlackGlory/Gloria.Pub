@@ -52,6 +52,7 @@ export
     new-password: ''
     confirm-password: ''
     is-loading: false
+    page-title: ''
   components: {
     PubTable
   }
@@ -83,17 +84,24 @@ export
           MessageBox "Error #{status}", 'Different password of the two inputs.'
       else
         MessageBox "Error #{status}", 'Old password is required.', 'error'
-  created: ->
-    get-user @$route.params.name
-    .then ({ name, tasks }) ~>
-      @$data.list = tasks
-      @$data.name = name
-    .catch ({ status, status-text }) ~>
-      if status
-        switch status
-        | 404 => @$router.go '/'
-        | otherwise => MessageBox "Error #{status}", status-text, 'error'
-      else throw arguments
+  route:
+    data: ({ next })->
+      data = {}
+      get-user @$route.params.name
+      .then ({ name, tasks }) ->
+        data.list = tasks
+        data.name = name
+      .catch ({ status, status-text }) ~>
+        if status
+          switch status
+          | 404 => @$router.go '/'
+          | otherwise => MessageBox "Error #{status}", status-text, 'error'
+        else throw arguments
+      .then ->
+        next {
+          ...data
+          page-title: 'User: #{data.name} - Gloria'
+        }
 </script>
 
 <style lang="sass">

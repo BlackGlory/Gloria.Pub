@@ -38,16 +38,20 @@ export
     code: ''
     description: ''
     is-loading: false
+    page-title: ''
   components: {
     CodeMirror
   }
-  created: ->
-    get-info!
-    .catch ({ status, status-text })~>
-      if status and status is 404
-        alert 'Please login.'
-        @$router.go "/login"
-      else throw arguments
+  route:
+    data: ({ next })->
+      get-info!
+      .catch ({ status, status-text })~>
+        if status and status is 404
+          alert 'Please login.'
+          @$router.go "/login"
+        else throw arguments
+      .then ->
+        next page-title: 'Create - Gloria'
   methods:
     create: ->
       { name, code, description } = @$data

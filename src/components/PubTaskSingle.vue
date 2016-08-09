@@ -66,6 +66,7 @@ export
     editable: false
     is-loading: false
     installed: false
+    page-title: ''
   components: {
     CodeMirror
     PubComment
@@ -102,43 +103,48 @@ export
           if status
             MessageBox "Error #{status}", status-text
           else throw arguments
-  created: ->
-    @$data.is-loading = true
-    get-task @$route.params.id
-    .then (task) ~>
-      @$data.is-loading = false
-      @$data.name = task.name
-      @$data.code = task.code
-      @$data.description = task.description
-      @$data.author = task.author
-      @$data.id = task._id
-      @$data.created = new Date task._created
-      @$data.updated = new Date task._updated
-    .catch ({ status, status-text }) ~>
-      @$data.is-loading = false
-      if status
-        switch status
-        | 404 => @$router.go '/tasks'
-        | otherwise => MessageBox "Error #{status}", status-text, 'error'
-      else throw arguments
-    .then get-info
-    .then ({ name }) ~>
-      if name is @$data.author
-        @$data.editable = true
-    .catch ({ status, status-text }) ~>
-      if status
-        switch status
-        | 404 => @$data.session = {}
-        | otherwise => MessageBox "Error #{status}", status-text, 'error'
-      else throw arguments
-    .then ~>
-      send-to-extension do
-        type: 'is-exist'
-        origin: gen-sign @$route.params.id
-    .then ~>
-      @$data.installed = true
-    .catch ~>
-      @$data.installed = false
+  route:
+    data: ({ next }) !->
+      data = {}
+      data.is-loading = true
+      get-task @$route.params.id
+      .then (task) ->
+        data.is-loading = false
+        data.name = task.name
+        data.code = task.code
+        data.description = task.description
+        data.author = task.author
+        data.id = task._id
+        data.created = new Date task._created
+        data.updated = new Date task._updated
+      .catch ({ status, status-text }) ~>
+        data.is-loading = false
+        if status
+          switch status
+          | 404 => @$router.go '/tasks'
+          | otherwise => MessageBox "Error #{status}", status-text, 'error'
+        else throw arguments
+      .then get-info
+      .then ({ name }) ->
+        if name is data.author
+          data.editable = true
+      .catch ({ status, status-text }) ->
+        if status
+          MessageBox "Error #{status}", status-text, 'error'
+        else throw arguments
+      .then ~>
+        send-to-extension do
+          type: 'is-exist'
+          origin: gen-sign @$route.params.id
+      .then ->
+        data.installed = true
+      .catch ->
+        data.installed = false
+      .then ->
+        next {
+          ...data
+          page-title: "#{data.name} by #{data.author} - Gloria"
+        }
 </script>
 
 <style lang="sass">

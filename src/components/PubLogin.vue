@@ -39,14 +39,18 @@ export
     captcha: ''
     is-loading: false
     captcha-image: get-captcha!
-  created: ->
-    get-info!
-    .then ({ name }) ~>
-      @$router.go '/tasks'
-    .catch ({ status, status-text }) ->
-      if status and status isnt 404
-        MessageBox "Error #{status}", status-text, 'error'
-      else throw arguments
+    page-title: ''
+  route:
+    data: ({ next })->
+      get-info!
+      .then ({ name }) ~>
+        @$router.go '/tasks'
+      .catch ({ status, status-text }) ->
+        if status and status isnt 404
+          MessageBox "Error #{status}", status-text, 'error'
+        else throw arguments
+      .then ->
+        next page-title: 'Login - Gloria'
   methods:
     update-captcha: ->
       @$data.captcha-image = get-captcha!

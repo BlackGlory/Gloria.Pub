@@ -39,6 +39,7 @@ export
     description: ''
     id: ''
     is-loading: false
+    page-title: ''
   components: {
     CodeMirror
   }
@@ -70,29 +71,37 @@ export
           | 404 => @$router.go '/tasks'
           | otherwise => MessageBox "Error #{status}", status-text, 'error'
         else throw arguments
-  created: ->
-    get-info!
-    .catch ({ status, status-text }) ~>
-      if status
-        alert 'please login'
-        @$router.go "/login"
-      else throw arguments
+  route:
+    data: ({ next })->
+      data = {}
 
-    @$data.is-loading = true
-    get-task @$route.params.id
-    .then (task) ~>
-      @$data.is-loading = false
-      @$data.name = task.name
-      @$data.code = task.code
-      @$data.description = task.description
-      @$data.id = task._id
-    .catch ({ status, status-text }) ~>
-      @$data.is-loading = false
-      if status
-        switch status
-        | 404 => @$router.go '/tasks'
-        | otherwise => MessageBox "Error #{status}", status-text, 'error'
-      else throw arguments
+      get-info!
+      .catch ({ status, status-text }) ~>
+        if status
+          alert 'please login'
+          @$router.go "/login"
+        else throw arguments
+      .then ->
+        data.is-loading = true
+        get-task @$route.params.id
+      .then (task) ->
+        data.is-loading = false
+        data.name = task.name
+        data.code = task.code
+        data.description = task.description
+        data.id = task._id
+      .catch ({ status, status-text }) ~>
+        data.is-loading = false
+        if status
+          switch status
+          | 404 => @$router.go '/tasks'
+          | otherwise => MessageBox "Error #{status}", status-text, 'error'
+        else throw arguments
+      .then ->
+        next {
+          ...data
+          page-title: 'Edit - Gloria'
+        }
 </script>
 
 <style lang="sass">

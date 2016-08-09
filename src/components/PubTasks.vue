@@ -24,6 +24,10 @@ export
   name: 'pub-tasks'
   data: ->
     keyword: ''
+    page-title: ''
+  route:
+    data: ({ next }) !->
+      next page-title: 'Tasks - Gloria'
   methods:
     search: ->
       @$router.go "/tasks/#{@$data.keyword}"

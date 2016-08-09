@@ -39,6 +39,9 @@ export
     captcha: ''
     is-loading: false
     captcha-image: get-captcha!
+  route:
+    data: ({ next }) !->
+      next page-title: 'Signup - Gloria'
   methods:
     update-captcha: ->
       @$data.captcha-image = get-captcha!

@@ -1,7 +1,7 @@
 <template>
   <div class="pub-app">
     <pub-header :session="session"></pub-header>
-    <router-view></router-view>
+    <router-view @route-data-loaded="changeTitle"></router-view>
     <pub-footer></pub-footer>
   </div>
 </template>
@@ -21,6 +21,9 @@ export
     PubHeader
     PubFooter
   }
+  methods:
+    change-title: ({ page-title = document.title }) ->
+      document.title = page-title
   created: ->
     @$dispatch 'session-change'
   events:

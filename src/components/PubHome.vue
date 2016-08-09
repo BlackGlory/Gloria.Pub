@@ -86,23 +86,32 @@ export
   data: ->
     list: []
     is-loading: false
+    page-title: ''
   components: {
     PubTable
   }
-  created: ->
-    @$data.is-loading = true
-    get-tasks!
-    .then ({ list }) ~>
-      @$data.is-loading = false
-      @$data.list = list
-    .catch ({ status, status-text }) ->
-      @$data.is-loading = false
-      if status and status isnt 404
-        MessageBox "Error #{status}", status-text, 'error'
-      else throw arguments
+  route:
+    data: ({ next }) !->
+      data = {}
+
+      data.is-loading = true
+      get-tasks!
+      .then ({ list }) ~>
+        data.is-loading = false
+        data.list = list
+      .catch ({ status, status-text }) ->
+        data.is-loading = false
+        if status and status isnt 404
+          MessageBox "Error #{status}", status-text, 'error'
+        else throw arguments
+      .then ->
+        next {
+          ...data
+          page-title: 'Gloria: A programmable website notifications aggregator'
+        }
   methods:
     install: ->
-      if chrome.webstore.install
+      if chrome?.webstore?.install?
         chrome.webstore.install!
       else
         window.open 'https://chrome.google.com/webstore/detail/gloria/cnelmenogjgobndnoddckekbojgginbn'
