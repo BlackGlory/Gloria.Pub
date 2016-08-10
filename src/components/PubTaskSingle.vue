@@ -84,25 +84,29 @@ export
         @$data.installed = true
         MessageBox 'Excited!', 'Task installed', 'success'
       .catch (error) ->
+        console.log error
         MessageBox 'Bad End', 'Task install fail, is Gloria enabled?', 'error'
     uninstall: ->
       MessageBox.confirm 'Are you sure to uninstall this task?'
-      .then ~->
+      .then ~>
         send-to-extension do
           type: 'uninstall'
           origin: gen-sign @$route.params.id
       .then ~>
         @$data.installed = false
         MessageBox 'Excited!', 'Task uninstalled', 'success'
+      .catch (error) ->
+        console.log error
     remove: ->
       MessageBox.confirm 'Are you sure to delete this task?'
       .then ~>
         remove-task @$route.params.id
-        .then ~> @$router.go '/user'
-        .catch ({ status, status-text }) ->
-          if status
-            MessageBox "Error #{status}", status-text
-          else throw arguments
+      .then ~>
+        @$router.go '/user'
+      .catch ({ status, status-text }) ->
+        if status
+          MessageBox "Error #{status}", status-text
+        else throw arguments
   route:
     data: ({ next }) !->
       data = {}
