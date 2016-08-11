@@ -134,7 +134,8 @@ export
           data.editable = true
       .catch ({ status, status-text }) ->
         if status
-          MessageBox "Error #{status}", status-text, 'error'
+          if status isnt 404
+            MessageBox "Error #{status}", status-text, 'error'
         else throw arguments
       .then ~>
         send-to-extension do

@@ -4,7 +4,7 @@ var path = require('path')
 
 module.exports = {
   entry: {
-    'app': './src/app.ls'
+    app: ['es6-promise', 'whatwg-fetch', './src/app.ls']
   }
 , output: {
     path: path.join(__dirname, 'build')
