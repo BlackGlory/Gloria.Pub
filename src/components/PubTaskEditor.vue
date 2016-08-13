@@ -72,7 +72,7 @@ export
           | otherwise => MessageBox "Error #{status}", status-text, 'error'
         else throw arguments
   route:
-    data: ({ next })->
+    data: ({ next }) !->
       data = {}
 
       get-info!
@@ -81,7 +81,7 @@ export
           alert 'please login'
           @$router.go "/login"
         else throw arguments
-      .then ->
+      .then ~>
         data.is-loading = true
         get-task @$route.params.id
       .then (task) ->

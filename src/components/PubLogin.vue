@@ -41,7 +41,7 @@ export
     captcha-image: get-captcha!
     page-title: ''
   route:
-    data: ({ next })->
+    data: ({ next }) !->
       get-info!
       .then ({ name }) ~>
         @$router.go '/tasks'

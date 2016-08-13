@@ -85,7 +85,7 @@ export
       else
         MessageBox "Error #{status}", 'Old password is required.', 'error'
   route:
-    data: ({ next })->
+    data: ({ next }) !->
       data = {}
       get-user @$route.params.name
       .then ({ name, tasks }) ->

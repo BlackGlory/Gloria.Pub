@@ -43,7 +43,7 @@ export
     CodeMirror
   }
   route:
-    data: ({ next })->
+    data: ({ next }) !->
       get-info!
       .catch ({ status, status-text })~>
         if status and status is 404
