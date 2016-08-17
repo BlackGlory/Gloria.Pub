@@ -1,6 +1,6 @@
-var path = require('path')
-  , webpack = require('webpack')
-  , CopyWebpackPlugin = require('copy-webpack-plugin')
+const path = require('path')
+const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: {

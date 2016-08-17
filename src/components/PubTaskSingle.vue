@@ -28,6 +28,9 @@
               <div class="column">
                 <a class="button is-primary is-large" v-show="!installed" @click="install">Install</a>
                 <a class="button is-success is-large" v-show="installed" @click="uninstall">Installed</a>
+                <div v-show="diff">
+                  Your local task code is different this code, you can <a @click="sync">sync to this code</a>.
+                </div>
               </div>
             </div>
           </div>
@@ -66,6 +69,7 @@ export
     editable: false
     is-loading: false
     installed: false
+    diff: false
     page-title: ''
   components: {
     CodeMirror
@@ -97,6 +101,18 @@ export
         MessageBox 'Excited!', 'Task uninstalled', 'success'
       .catch (error) ->
         console.log error
+    sync: ->
+      MessageBox.confirm 'Are you sure to sync this task code to your local task?'
+      .then ~>
+        send-to-extension do
+          type: 'update'
+          code: @$data.code
+          origin: gen-sign @$route.params.id
+      .then ~>
+        @$data.diff = false
+      .catch (error) ->
+        console.log error
+
     remove: ->
       MessageBox.confirm 'Are you sure to delete this task?'
       .then ~>
@@ -141,8 +157,13 @@ export
         send-to-extension do
           type: 'is-exist'
           origin: gen-sign @$route.params.id
-      .then ->
-        data.installed = true
+          code: data.code
+      .then (status) ->
+        if result is 'diff'
+          data.installed = true
+          data.diff = true
+        else
+          data.installed = true
       .catch ->
         data.installed = false
       .then ->

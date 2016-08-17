@@ -1,10 +1,10 @@
 {
   "name": "gloria.pub",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A website to share your Gloria task.",
   "main": "build/app.html",
   "scripts": {
-    "dev": "webpack-dev-server --port 3000 --inline --hot --content-base dev/",
+    "dev": "webpack-dev-server --port 3000 --inline --hot --quiet --history-api-fallback --content-base dev/",
     "build": "webpack --config webpack.prod.js --display-error-details",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -43,6 +43,7 @@
     "vue-loader": "git://github.com/BlackGlory/vue-loader.git#patch-1",
     "vue-style-loader": "^1.0.0",
     "webpack": "^1.13.1",
+    "webpack-dashboard": "0.0.1",
     "webpack-dev-server": "^1.14.1"
   }
 }

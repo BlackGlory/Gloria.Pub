@@ -1,6 +1,10 @@
-var path = require('path')
-  , webpack = require('webpack')
-  , CopyWebpackPlugin = require('copy-webpack-plugin')
+const path = require('path')
+const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const Dashboard = require('webpack-dashboard')
+const DashboardPlugin = require('webpack-dashboard/plugin')
+
+const dashboard = new Dashboard()
 
 module.exports = {
   entry: {
@@ -18,6 +22,7 @@ module.exports = {
         { from: './src' }
       ]
     , { ignore: ['*.ls', '*.vue'] })
+  , new DashboardPlugin(dashboard.setData)
   ]
 , module: {
     loaders: [
