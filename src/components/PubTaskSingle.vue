@@ -159,7 +159,7 @@ export
           origin: gen-sign @$route.params.id
           code: data.code
       .then (status) ->
-        if result is 'diff'
+        if status is 'diff'
           data.installed = true
           data.diff = true
         else
