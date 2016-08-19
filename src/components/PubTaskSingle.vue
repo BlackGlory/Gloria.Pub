@@ -26,17 +26,17 @@
                 <code-mirror :read-only="true" :value="code"></code-mirror>
               </div>
               <div class="column">
-                <a class="button is-primary is-large" v-show="!installed" @click="install">Install</a>
-                <a class="button is-success is-large" v-show="installed" @click="uninstall">Installed</a>
+                <a class="button is-primary is-large" v-show="!installed" @click="install">{{ $t('Install') }}</a>
+                <a class="button is-success is-large" v-show="installed" @click="uninstall">{{ $t('Installed') }}</a>
                 <div v-show="diff">
-                  Your local task code is different this code, you can <a @click="sync">sync to this code</a>.
+                  {{ $t('DiffNotice') }}<a @click="sync">{{ $t('SyncCode') }}</a>.
                 </div>
               </div>
             </div>
           </div>
           <div class="hero-foot">
-            <p>Created: {{ created }}</p>
-            <p>Updated: {{ updated }}</p>
+            <p>{{ $t('Created') }}: {{ created }}</p>
+            <p>{{ $t('Updated') }}: {{ updated }}</p>
             <pub-comment></pub-comment>
           </div>
         </article>
@@ -48,6 +48,7 @@
 <script lang="livescript">
 'use strict'
 
+require! 'vue': Vue
 require! './CodeMirror.vue': CodeMirror
 require! './PubComment.vue': PubComment
 require! '../utils.ls': { get-task, send-to-extension, get-info, MessageBox, remove-task, gen-sign }
@@ -86,23 +87,23 @@ export
         origin: gen-sign @$route.params.id
       .then ~>
         @$data.installed = true
-        MessageBox 'Excited!', 'Task installed', 'success'
-      .catch (error) ->
+        MessageBox @$t('Success'), @$t('TaskInstalled'), 'success'
+      .catch (error) ~>
         console.log error
-        MessageBox 'Bad End', 'Task install fail, is Gloria enabled?', 'error'
-    uninstall: ->
-      MessageBox.confirm 'Are you sure to uninstall this task?'
+        MessageBox @$t('Fail'), @$t('TaskInstallFail'), 'error'
+    uninstall: ~>
+      MessageBox.confirm @$t('Confirm.UninstallTask')
       .then ~>
         send-to-extension do
           type: 'uninstall'
           origin: gen-sign @$route.params.id
       .then ~>
         @$data.installed = false
-        MessageBox 'Excited!', 'Task uninstalled', 'success'
+        MessageBox @$t('Success'), @$t('TaskUninstalled'), 'success'
       .catch (error) ->
         console.log error
-    sync: ->
-      MessageBox.confirm 'Are you sure to sync this task code to your local task?'
+    sync: ~>
+      MessageBox.confirm @$t('Confirm.SyncTaskCode')
       .then ~>
         send-to-extension do
           type: 'update'
@@ -113,15 +114,15 @@ export
       .catch (error) ->
         console.log error
 
-    remove: ->
-      MessageBox.confirm 'Are you sure to delete this task?'
+    remove: ~>
+      MessageBox.confirm @$t('Confirm.RemoveTask')
       .then ~>
         remove-task @$route.params.id
       .then ~>
         @$router.go '/user'
-      .catch ({ status, status-text }) ->
+      .catch ({ status, status-text }) ~>
         if status
-          MessageBox "Error #{status}", status-text
+          MessageBox @$t('ErrorStatus', status), status-text
         else throw arguments
   route:
     data: ({ next }) !->
@@ -142,16 +143,16 @@ export
         if status
           switch status
           | 404 => @$router.go '/tasks'
-          | otherwise => MessageBox "Error #{status}", status-text, 'error'
+          | otherwise => MessageBox Vue.t('Error', status), status-text, 'error'
         else throw arguments
       .then get-info
       .then ({ name }) ->
         if name is data.author
           data.editable = true
-      .catch ({ status, status-text }) ->
+      .catch ({ status, status-text }) ~>
         if status
           if status isnt 404
-            MessageBox "Error #{status}", status-text, 'error'
+            MessageBox Vue.t('Error', status), status-text, 'error'
         else throw arguments
       .then ~>
         send-to-extension do

@@ -7,7 +7,7 @@
         </p>
         <h1 class="title">Gloria</h1>
         <h2 class="subtitle">
-          A <strong>programmable</strong> website notifications aggregator in <strong>Chrome</strong>
+          {{{ $t('Gloria.RawDescription') }}}
         </h2>
         <iframe src="https://ghbtns.com/github-btn.html?user=BlackGlory&repo=Gloria&type=star&size=large" frameborder="0" scrolling="0" width="80px" height="30px"></iframe>
         <iframe src="https://ghbtns.com/github-btn.html?user=BlackGlory&repo=Gloria&type=fork&size=large" frameborder="0" scrolling="0" width="80px" height="30px"></iframe>
@@ -16,10 +16,10 @@
             <span class="icon">
               <i class="fa fa-download"></i>
             </span>
-            <span>Install Extension</span>
+            <span>{{ $t('InstallExtension') }}</span>
           </a>
           <a class="button is-large" v-link="'tasks'">
-            View tasks
+            {{ $t('ViewTasks') }}
           </a>
         </p>
       </div>
@@ -33,19 +33,19 @@
               <span class="icon is-large">
                 <i class="fa fa-code"></i>
               </span>
-              <p class="title"><strong>Programmable</strong></p>
+              <p class="title"><strong>{{ $t('Programmable') }}</strong></p>
             </div>
             <div class="column is-4 has-text-centered">
               <span class="icon is-large">
                 <i class="fa fa-chrome"></i>
               </span>
-              <p class="title"><strong>Chrome Extension</strong></p>
+              <p class="title"><strong>{{ $t('ChromeExtension') }}</strong></p>
             </div>
             <div class="column is-4 has-text-centered">
               <span class="icon is-large">
                 <i class="fa fa-github"></i>
               </span>
-              <p class="title"><strong>Open Source</strong></p>
+              <p class="title"><strong>{{ $t('OpenSource') }}</strong></p>
             </div>
           </nav>
         </div>
@@ -55,7 +55,7 @@
     <section class="section">
       <div class="container">
         <h2 class="title">
-          New task
+          {{ $t('NewTask') }}
         </h2>
         <pub-table v-loading="isLoading" :loading-options="{ bg: 'transparent' }" :items="list"></pub-table>
       </div>
@@ -64,7 +64,7 @@
     <section class="hero is-primary is-bold">
       <div class="hero-body">
         <div class="container has-text-centered">
-          <p class="title"><strong><a v-link="'create'">Contribute your awesome task!</a></strong></p>
+          <p class="title"><strong><a v-link="'create'">{{ $t('ContributeTask') }}</a></strong></p>
         </div>
       </div>
     </section>
@@ -74,6 +74,7 @@
 <script lang="livescript">
 'use strict'
 
+require! 'vue': Vue
 require! './PubTable.vue': PubTable
 require! '../utils.ls': { get-tasks, MessageBox }
 require! 'vue-loading': { default: loading }
@@ -99,15 +100,15 @@ export
       .then ({ list }) ~>
         data.is-loading = false
         data.list = list
-      .catch ({ status, status-text }) ->
+      .catch ({ status, status-text }) ~>
         data.is-loading = false
         if status and status isnt 404
-          MessageBox "Error #{status}", status-text, 'error'
+          MessageBox Vue.t('Error', [status]), status-text, 'error'
         else throw arguments
-      .then ->
+      .then ~>
         next {
           ...data
-          page-title: 'Gloria: A programmable website notifications aggregator'
+          page-title: "Gloria: #{Vue.t('Gloria.Description')}"
         }
   methods:
     install: ->

@@ -4,17 +4,17 @@
       <div class="box">
         <form class="control">
           <p class="control has-icon">
-            <input type="text" v-model="name" placeholder="name" class="input"/><i class="fa fa-user"></i>
+            <input type="text" v-model="name" :placeholder="$t('Users.Name')" class="input"/><i class="fa fa-user"></i>
           </p>
           <p class="control has-icon">
-            <input type="password" v-model="password" placeholder="password" class="input"/><i class="fa fa-lock"></i>
+            <input type="password" v-model="password" :placeholder="$t('Users.Password')" class="input"/><i class="fa fa-lock"></i>
           </p>
           <p class="control has-icon">
-            <input type="text" v-model="captcha" name="captcha" placeholder="captcha" class="input" /><i class="fa fa-picture-o"></i>
+            <input type="text" v-model="captcha" name="captcha" :placeholder="$t('Users.Captcha')" class="input" /><i class="fa fa-picture-o"></i>
             <img :src="captchaImage" @click="updateCaptcha" />
           </p>
           <p class="control">
-            <a @click="signup" class="button is-success">Sign up</a><span> or <a v-link="'/login'" class="is-link align-bottom underline">Login</a></span>
+            <a @click="signup" class="button is-success">{{ $t('Signup') }}</a><span> {{ $t('Or') }} <a v-link="'/login'" class="is-link align-bottom underline">{{ $t('Login') }}</a></span>
           </p>
         </form>
       </div>
@@ -25,6 +25,7 @@
 <script lang="livescript">
 'use strict'
 
+require! 'vue': Vue
 require! '../utils.ls': { sign-up, login, MessageBox, get-captcha, is-user-name, is-password }
 require! 'vue-loading': { default: loading }
 
@@ -39,9 +40,10 @@ export
     captcha: ''
     is-loading: false
     captcha-image: get-captcha!
+    page-title: ''
   route:
     data: ({ next }) !->
-      next page-title: 'Signup - Gloria'
+      next page-title: "#{ Vue.t('Signup') } - Gloria"
   methods:
     update-captcha: ->
       @$data.captcha-image = get-captcha!
@@ -49,11 +51,11 @@ export
       { name, password, captcha } = @$data
 
       unless is-user-name name
-        MessageBox 'Error', 'Name must be 6-16 characters, only number, word, - and _ available.', 'error'
+        MessageBox @$t('Error'), @$t('Validate.UserName'), 'error'
         return
 
       unless is-password password
-        MessageBox 'Error', 'Password must be 8-16 characters.', 'error'
+        MessageBox @$t('Error'), @$t('Validate.Password'), 'error'
         return
 
       @$data.is-loading = true
@@ -61,20 +63,14 @@ export
       .catch ({ status, status-text }) ~>
         @$data.is-loading = false
         if status
-          MessageBox "Error #{status}", status-text, 'error'
+          MessageBox @$t('ErrorStatus', status), status-text, 'error'
           @update-captcha!
         else throw arguments
-      .then login name, password
       .then ~>
         @$data.is-loading = false
-        @$dispatch 'session-change'
-        @$router.go '/login'
-      .catch ({ status, status-text }) ~>
-        @$data.is-loading = false
-        if status
-          MessageBox "Error #{status}", status-text, 'error'
-          @update-captcha!
-        else throw arguments
+        MessageBox @$t('Success'), @$t('SignupSuccess')
+        .then ~>
+          @$router.go '/login'
 
 </script>
 

@@ -4,9 +4,9 @@
       <div class="container">
         <nav>
           <p class="control has-addons">
-            <input class="input" type="text" v-model="keyword" placeholder="Find a task">
-            <a class="button is-info" @click="search">Search</a>
-            <span>&nbsp;or&nbsp;<a v-link="'/create'" class="button">Create</a></span>
+            <input class="input" type="text" v-model="keyword" :placeholder="$t('FindTask')">
+            <a class="button is-info" @click="search">{{ $t('Search') }}</a>
+            <span>&nbsp;{{ $t('Or') }}&nbsp;<a v-link="'/create'" class="button">{{ $t('Create') }}</a></span>
           </p>
         </nav>
         <router-view></router-view>
@@ -18,6 +18,7 @@
 <script lang="livescript">
 'use strict'
 
+require! 'vue': Vue
 require! './PubTaskCreator.vue': PubTaskCreator
 
 export
@@ -26,8 +27,8 @@ export
     keyword: ''
     page-title: ''
   route:
-    data: ({ next }) !->
-      next page-title: 'Tasks - Gloria'
+    data: ({ next }) !~>
+      next page-title: "#{ Vue.t('Tasks') } - Gloria"
   methods:
     search: ->
       @$router.go "/tasks/#{@$data.keyword}"

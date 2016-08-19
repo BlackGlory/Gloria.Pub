@@ -11,10 +11,10 @@
 
         <div class="nav-right nav-menu">
           <a class="nav-item" v-link="'/'">
-            Home
+            {{ $t('Home') }}
           </a>
           <a class="nav-item" v-link="'/tasks'">
-            Tasks
+            {{ $t('Tasks') }}
           </a>
           <a v-show="session.name" class="nav-item" v-link="'/user'">
             <span class="icon">
@@ -23,13 +23,13 @@
             {{ session.name }}
           </a>
           <a v-show="session.name" class="nav-item" @click="logout">
-            Log out
+            {{ $t('Logout') }}
           </a>
           <a v-show="!session.name" class="nav-item" v-link="'/login'">
-            Log in
+            {{ $t('Login') }}
           </a>
           <a v-show="!session.name" class="nav-item" v-link="'/signup'">
-            Sign up
+            {{ $t('Signup') }}
           </a>
           <span class="nav-item">
             <a class="button is-info" href="//github.com/BlackGlory/Gloria">
@@ -48,6 +48,7 @@
 <script lang="livescript">
 'use strict'
 
+require! 'vue': Vue
 require! '../utils.ls': { logout, get-info, MessageBox }
 
 export
@@ -62,7 +63,7 @@ export
         @$router.go '/login'
       .catch ({ status, status-text }) ->
         if status
-          MessageBox "Error #{status}", status-text, 'error'
+          MessageBox Vue.t('ErrorStatus', status), status-text, 'error'
         else throw arguments
 </script>
 

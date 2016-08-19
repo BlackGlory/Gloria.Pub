@@ -12,19 +12,19 @@
             <pub-table :items="list"></pub-table>
           </div>
           <div class="hero-foot" v-show="!$route.params.name" v-loading="isLoading" :loading-options="{ bg: 'transparent' }">
-            <h2 class="title">Change password</h2>
+            <h2 class="title">{{ $t('ChangePassword') }}</h2>
             <form class="control">
               <p class="control has-icon">
-                <input type="password" v-model="oldPassword" placeholder="old password" class="input"/><i class="fa fa-lock"></i>
+                <input type="password" v-model="oldPassword" :placeholder="$t('OldPassword')" class="input"/><i class="fa fa-lock"></i>
               </p>
               <p class="control has-icon">
-                <input type="password" v-model="newPassword" placeholder="new password" class="input"/><i class="fa fa-lock"></i>
+                <input type="password" v-model="newPassword" :placeholder="$t('NewPassword')" class="input"/><i class="fa fa-lock"></i>
               </p>
               <p class="control has-icon">
-                <input type="password" v-model="confirmPassword" placeholder="new password again" class="input"/><i class="fa fa-lock"></i>
+                <input type="password" v-model="confirmPassword" :placeholder="$t('NewPasswordConfirm')" class="input"/><i class="fa fa-lock"></i>
               </p>
               <p class="control">
-                <a @click="updatePassword" class="button is-success">Update password</a>
+                <a @click="updatePassword" class="button is-success">{{ $t('UpdatePassword') }}</a>
               </p>
             </form>
           </div>
@@ -36,6 +36,7 @@
 <script lang="livescript">
 'use strict'
 
+require! 'vue': Vue
 require! './PubTable.vue': PubTable
 require! '../utils.ls': { get-user, MessageBox, is-password }
 require! 'vue-loading': { default: loading }
@@ -61,7 +62,7 @@ export
       { old-password, new-password, confirm-password } = @$data
 
       unless is-password new-password
-        MessageBox "Error", 'Password must be 8-16 characters.', 'error'
+        MessageBox @$t('ErrorStatus', status), @$t('Validate.Password'), 'error'
         return
 
       if old-password
@@ -72,16 +73,16 @@ export
             update-user name, do
               password: old-password
               new-password: new-password
-          .then ->
+          .then ~>
             @$data.is-loading = false
-            MessageBox 'Excited!', 'Your new password has been available.', 'success'
-          .catch ({ status, status-text }) ->
+            MessageBox @$t('Success'), @$t('PasswordAvaliable'), 'success'
+          .catch ({ status, status-text }) ~>
             @$data.is-loading = false
             if status
-              MessageBox "Error #{status}", status-text, 'error'
+              MessageBox @$t('Error', status), status-text, 'error'
             else throw arguments
         else
-          MessageBox "Error #{status}", 'Different password of the two inputs.'
+          MessageBox @$t('Error', status), @$t('DifferentTwoPassword')
       else
         MessageBox "Error #{status}", 'Old password is required.', 'error'
   route:
@@ -95,12 +96,12 @@ export
         if status
           switch status
           | 404 => @$router.go '/'
-          | otherwise => MessageBox "Error #{status}", status-text, 'error'
+          | otherwise => MessageBox Vue.t('Error', status), status-text, 'error'
         else throw arguments
-      .then ->
+      .then ~>
         next {
           ...data
-          page-title: 'User: #{data.name} - Gloria'
+          page-title: "#{ Vue.t('User') }: #{ data.name } - Gloria"
         }
 </script>
 

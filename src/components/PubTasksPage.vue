@@ -1,13 +1,14 @@
 <template>
   <div class="pub-tasks-page" v-loading="isLoading" :loading-options="{ bg: 'transparent' }">
     <pub-table :items="list"></pub-table>
-    <pub-pagination :pagination="pagination" base="'/tasks'"></pub-pagination>
+    <pub-pagination :pagination="pagination" :base-url="'/tasks' + ($route.params.keyword ? '/' + $route.params.keyword : '')"></pub-pagination>
   </div>
 </template>
 
 <script lang="livescript">
 'use strict'
 
+require! 'vue': Vue
 require! './PubTable.vue': PubTable
 require! './PubTaskCreator.vue': PubTaskCreator
 require! './PubPagination.vue': PubPagination
@@ -22,6 +23,7 @@ export
   data: ->
     list: []
     is-loading: false
+    pagination: {}
   components: {
     PubTable
     PubTaskCreator
@@ -42,7 +44,7 @@ export
           | 404 =>
             @$data.list = []
             @$data.pagination = {}
-          | otherwise => MessageBox "Error #{status}", status-text, 'error'
+          | otherwise => MessageBox Vue.t('Error', status), status-text, 'error'
         else throw arguments
       transition.next!
 </script>

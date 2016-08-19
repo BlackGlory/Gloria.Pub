@@ -21,6 +21,7 @@
     "font-awesome": "^4.6.3",
     "vue": "^1.0.26",
     "vue-disqus": "^1.0.2",
+    "vue-i18n": "^4.2.2",
     "vue-loading": "git://github.com/BlackGlory/vue-loading.git",
     "vue-msgbox": "git://github.com/BlackGlory/vue-msgbox.git",
     "vue-router": "^0.7.13",

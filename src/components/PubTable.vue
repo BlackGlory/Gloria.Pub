@@ -3,9 +3,9 @@
     <table class="table is-bordered">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Author</th>
+          <th>{{ $t('Task.Name') }}</th>
+          <th>{{ $t('Task.Description') }}</th>
+          <th>{{ $t('Task.Author') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -49,7 +49,7 @@ export
       if status
         switch status
         | 404 => @$data.session = {}
-        | otherwise => MessageBox "Error #{status}", status-text, 'error'
+        | otherwise => MessageBox @$t('Error', status), status-text, 'error'
       else throw arguments
 </script>
 

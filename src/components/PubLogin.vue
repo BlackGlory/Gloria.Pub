@@ -4,17 +4,17 @@
       <div class="box">
         <form class="control">
           <p class="control has-icon">
-            <input type="text" v-model="name" name="name" placeholder="name" class="input" /><i class="fa fa-user"></i>
+            <input type="text" v-model="name" name="name" :placeholder="$t('Users.Name')" class="input" /><i class="fa fa-user"></i>
           </p>
           <p class="control has-icon">
-            <input type="password" v-model="password" name="password" placeholder="password" class="input" /><i class="fa fa-lock"></i>
+            <input type="password" v-model="password" name="password" :placeholder="$t('Users.Password')" class="input" /><i class="fa fa-lock"></i>
           </p>
           <p class="control has-icon">
-            <input type="text" v-model="captcha" name="captcha" placeholder="captcha" class="input" /><i class="fa fa-picture-o"></i>
+            <input type="text" v-model="captcha" name="captcha" :placeholder="$t('Users.Captcha')" class="input" /><i class="fa fa-picture-o"></i>
             <img :src="captchaImage" @click="updateCaptcha" />
           </p>
           <p class="control">
-            <a @click="login" class="button is-success">Login</a><span> or <a v-link="'/signup'" class="is-link align-bottom underline">Sign up</a></span>
+            <a @click="login" class="button is-success">{{ $t('Login') }}</a><span> {{ $t('Or') }} <a v-link="'/signup'" class="is-link align-bottom underline">{{ $t('Signup') }}</a></span>
           </p>
         </form>
       </div>
@@ -25,6 +25,7 @@
 <script lang="livescript">
 'use strict'
 
+require! 'vue': Vue
 require! '../utils.ls': { login, get-info, MessageBox, get-captcha }
 require! 'vue-loading': { default: loading }
 
@@ -45,12 +46,12 @@ export
       get-info!
       .then ({ name }) ~>
         @$router.go '/tasks'
-      .catch ({ status, status-text }) ->
+      .catch ({ status, status-text }) ~>
         if status and status isnt 404
-          MessageBox "Error #{status}", status-text, 'error'
+          MessageBox Vue.t('Error', status), status-text, 'error'
         else throw arguments
-      .then ->
-        next page-title: 'Login - Gloria'
+      .then ~>
+        next page-title: "Vue.t('Login') - Gloria"
   methods:
     update-captcha: ->
       @$data.captcha-image = get-captcha!
@@ -65,7 +66,7 @@ export
       .catch ({ status, status-text }) ~>
         @$data.is-loading = false
         if status
-          MessageBox "Error #{status}", status-text, 'error'
+          MessageBox @$t('Error', status), status-text, 'error'
           @update-captcha!
         else throw arguments
 </script>

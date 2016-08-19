@@ -1,6 +1,7 @@
 'use strict'
 
-require! 'vue':Vue
+require! 'vue': Vue
+require! 'vue-i18n': VueI18n
 require! 'vue-router': VueRouter
 
 require! './components/PubApp.vue': PubApp
@@ -13,6 +14,23 @@ require! './components/PubSignup.vue': PubSignup
 require! './components/PubTaskCreator.vue': PubTaskCreator
 require! './components/PubTaskEditor.vue': PubTaskEditor
 require! './components/PubUser.vue': PubUser
+
+require! './locales/index.ls': locales
+
+Vue.use VueI18n
+
+function browser-language
+  if locales[navigator.language]
+    return navigator.language
+  else
+    for , lang of navigator.languages
+      return lang if locales[lang]
+  return Object.keys(locales)[0]
+
+Vue.config.lang = browser-language!
+
+for lang, locale of locales
+  Vue.locale lang, locale
 
 Vue.use VueRouter
 
