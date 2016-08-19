@@ -63,3 +63,4 @@ module.exports =
   'PasswordAvaliable': '修改成功, 你的新密码已可用'
   'User': '用户'
   'FindTask': '关键字'
+  'SignupSuccess': '注册成功, 转入登录页面'
