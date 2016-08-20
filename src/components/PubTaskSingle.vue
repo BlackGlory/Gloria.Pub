@@ -91,7 +91,7 @@ export
       .catch (error) ~>
         console.log error
         MessageBox @$t('Fail'), @$t('TaskInstallFail'), 'error'
-    uninstall: ~>
+    uninstall: ->
       MessageBox.confirm @$t('Confirm.UninstallTask')
       .then ~>
         send-to-extension do
@@ -102,7 +102,7 @@ export
         MessageBox @$t('Success'), @$t('TaskUninstalled'), 'success'
       .catch (error) ->
         console.log error
-    sync: ~>
+    sync: ->
       MessageBox.confirm @$t('Confirm.SyncTaskCode')
       .then ~>
         send-to-extension do
@@ -114,7 +114,7 @@ export
       .catch (error) ->
         console.log error
 
-    remove: ~>
+    remove: ->
       MessageBox.confirm @$t('Confirm.RemoveTask')
       .then ~>
         remove-task @$route.params.id

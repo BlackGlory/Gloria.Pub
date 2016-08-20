@@ -31,7 +31,7 @@ module.exports =
     'Description': '任務描述必須為 0-300 個字符.'
     'DifferentTwoPassword': '兩次輸入的密碼不同.'
   'Task':
-    'Name': '任務代碼'
+    'Name': '任務名稱'
     'Description': '任務描述'
     'Author': '作者'
   'Cancel': '取消'
