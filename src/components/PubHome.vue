@@ -139,7 +139,7 @@ export
   methods:
     install: ->
       if chrome?.webstore?.install?
-        chrome.webstore.install ~>
+        chrome.webstore.install 'https://chrome.google.com/webstore/detail/cnelmenogjgobndnoddckekbojgginbn', ~>
           @$data.installed = true
       else
         window.open 'https://chrome.google.com/webstore/detail/gloria/cnelmenogjgobndnoddckekbojgginbn'
