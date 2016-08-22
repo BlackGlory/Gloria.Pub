@@ -81,7 +81,7 @@ export
       @$router.go "/task/#{@$route.params.id}/edit"
     install: ->
       send-to-extension do
-        type: 'install'
+        type: 'task.install'
         name: @$data.name
         code: @$data.code
         origin: gen-sign @$route.params.id
@@ -95,7 +95,7 @@ export
       MessageBox.confirm @$t('Confirm.UninstallTask')
       .then ~>
         send-to-extension do
-          type: 'uninstall'
+          type: 'task.uninstall'
           origin: gen-sign @$route.params.id
       .then ~>
         @$data.installed = false
@@ -106,7 +106,7 @@ export
       MessageBox.confirm @$t('Confirm.SyncTaskCode')
       .then ~>
         send-to-extension do
-          type: 'update'
+          type: 'task.update'
           code: @$data.code
           origin: gen-sign @$route.params.id
       .then ~>
@@ -156,7 +156,7 @@ export
         else throw arguments
       .then ~>
         send-to-extension do
-          type: 'is-exist'
+          type: 'task.is-exist'
           origin: gen-sign @$route.params.id
           code: data.code
       .then (status) ->

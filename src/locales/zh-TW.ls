@@ -64,3 +64,5 @@ module.exports =
   'User': '用戶'
   'FindTask': '關鍵字'
   'SignupSuccess': '註冊成功, 轉入登錄頁面'
+  'UpdateExtension': '更新擴展程序'
+  'ViewTutorial': '查看教程'

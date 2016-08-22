@@ -1,8 +1,10 @@
-const API_SERVER = 'https://api.gloria.pub'
-const EXTENSION_ID = 'cnelmenogjgobndnoddckekbojgginbn'
-
 require! 'vue-msgbox': { default: MessageBox }
 require! 'vue-msgbox/lib/vue-msgbox.css'
+require! '../package.json': { version }
+
+export const API_SERVER = 'https://api.gloria.pub'
+export const EXTENSION_ID = 'cnelmenogjgobndnoddckekbojgginbn'
+export const VERSION = version
 
 function check-status res
   if 200 <= res.status < 300

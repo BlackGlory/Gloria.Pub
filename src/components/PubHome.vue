@@ -12,11 +12,23 @@
         <iframe src="https://ghbtns.com/github-btn.html?user=BlackGlory&repo=Gloria&type=star&size=large" frameborder="0" scrolling="0" width="80px" height="30px"></iframe>
         <iframe src="https://ghbtns.com/github-btn.html?user=BlackGlory&repo=Gloria&type=fork&size=large" frameborder="0" scrolling="0" width="80px" height="30px"></iframe>
         <p class="hero-buttons">
-          <a class="button is-primary is-large" @click="install">
+          <a v-show="!installed" class="button is-primary is-large" @click="install">
             <span class="icon">
               <i class="fa fa-download"></i>
             </span>
             <span>{{ $t('InstallExtension') }}</span>
+          </a>
+          <a v-show="installed && !needUpdate" class="button is-success is-large" href="//docs.gloria.pub">
+            <span class="icon">
+              <i class="fa fa-download"></i>
+            </span>
+            <span>{{ $t('ViewTutorial') }}</span>
+          </a>
+          <a v-show="installed && needUpdate" class="button is-primary is-large" @click="install">
+            <span class="icon">
+              <i class="fa fa-download"></i>
+            </span>
+            <span>{{ $t('UpdateExtension') }}</span>
           </a>
           <a class="button is-large" v-link="'tasks'">
             {{ $t('ViewTasks') }}
@@ -76,7 +88,7 @@
 
 require! 'vue': Vue
 require! './PubTable.vue': PubTable
-require! '../utils.ls': { get-tasks, MessageBox }
+require! '../utils.ls': { get-tasks, MessageBox, send-to-extension, VERSION }
 require! 'vue-loading': { default: loading }
 
 export
@@ -88,6 +100,8 @@ export
     list: []
     is-loading: false
     page-title: ''
+    need-update: false
+    installed: false
   components: {
     PubTable
   }
@@ -96,7 +110,19 @@ export
       data = {}
 
       data.is-loading = true
-      get-tasks!
+      send-to-extension do
+        type: 'extension.version'
+      .then (local-version) ->
+        data.installed = true
+        if VERSION > local-version # string compare
+          data.need-update = true
+        else
+          data.need-update = false
+      .catch ->
+        data.installed = false
+        data.need-update = false
+      .then ->
+        get-tasks!
       .then ({ list }) ~>
         data.is-loading = false
         data.list = list
@@ -105,7 +131,7 @@ export
         if status and status isnt 404
           MessageBox Vue.t('Error', [status]), status-text, 'error'
         else throw arguments
-      .then ~>
+      .then ->
         next {
           ...data
           page-title: "Gloria: #{Vue.t('Gloria.Description')}"
@@ -113,7 +139,8 @@ export
   methods:
     install: ->
       if chrome?.webstore?.install?
-        chrome.webstore.install!
+        chrome.webstore.install ~>
+          @$data.installed = true
       else
         window.open 'https://chrome.google.com/webstore/detail/gloria/cnelmenogjgobndnoddckekbojgginbn'
 </script>

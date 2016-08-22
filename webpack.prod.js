@@ -38,6 +38,7 @@ module.exports = {
     , { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "file" }
     , { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" }
     , { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "file" }
+    , { test: /\.json$/, loader: 'json' }
     ]
   }
 , vue: {
