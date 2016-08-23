@@ -146,11 +146,15 @@ export
 </script>
 
 <style lang="sass">
-#icon
-  box-shadow: 0 20px 60px rgba(17, 17, 17, 0.05), 0 5px 10px rgba(17, 17, 17, 0.1), 0 1px 1px rgba(17, 17, 17, 0.2)
-  display: inline-block
-  height: 240px
-  margin-bottom: 40px
-  vertical-align: top
-  width: 240px
+.pub-home
+  .subtitle
+    line-height: 30px
+
+  #icon
+    box-shadow: 0 20px 60px rgba(17, 17, 17, 0.05), 0 5px 10px rgba(17, 17, 17, 0.1), 0 1px 1px rgba(17, 17, 17, 0.2)
+    display: inline-block
+    height: 240px
+    margin-bottom: 40px
+    vertical-align: top
+    width: 240px
 </style>
