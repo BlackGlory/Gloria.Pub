@@ -1,6 +1,6 @@
 module.exports =
   'Home': '主页'
-  'Tasks': '任务'
+  'Tasks': '任务列表'
   'Logout': '退出'
   'Login': '登录'
   'Signup': '注册'
@@ -66,3 +66,4 @@ module.exports =
   'SignupSuccess': '注册成功, 转入登录页面'
   'UpdateExtension': '更新扩展程序'
   'ViewTutorial': '查看教程'
+  'GetStarted': '教程'

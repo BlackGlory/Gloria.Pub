@@ -13,6 +13,9 @@
           <a class="nav-item" v-link="'/'">
             {{ $t('Home') }}
           </a>
+          <a class="nav-item" href="http://docs.gloria.pub">
+            {{ $t('GetStarted')}}
+          </a>
           <a class="nav-item" v-link="'/tasks'">
             {{ $t('Tasks') }}
           </a>
