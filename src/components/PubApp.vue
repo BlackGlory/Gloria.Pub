@@ -44,4 +44,8 @@ $fa-font-path: "~font-awesome/fonts"
 @import "~font-awesome/scss/font-awesome"
 
 @import "~bulma/bulma"
+
+body
+  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Hiragino Sans GB", "Source Han Sans CN Normal", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif
+  font-size: 16px
 </style>

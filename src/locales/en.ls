@@ -5,7 +5,7 @@ module.exports =
   'Login': 'Log in'
   'Signup': 'Sign up'
   'Gloria':
-    'RawDescription': 'A <strong>programmable</strong> website notifications aggregator in <strong>Chrome</strong>'
+    'RawDescription': 'A <strong>programmable</strong> website notifications aggregator in <strong>Chrome</strong>.<br><strong>Feel the flow of information, and never miss new messages.</strong>'
     'Description': 'A programmable website notifications aggregator'
   'InstallExtension': 'Install Extension'
   'ViewTasks': 'View tasks'

@@ -20,13 +20,13 @@
           </a>
           <a v-show="installed && !needUpdate" class="button is-success is-large" href="http://docs.gloria.pub">
             <span class="icon">
-              <i class="fa fa-download"></i>
+              <i class="fa fa-book"></i>
             </span>
             <span>{{ $t('ViewTutorial') }}</span>
           </a>
           <a v-show="installed && needUpdate" class="button is-primary is-large" @click="install">
             <span class="icon">
-              <i class="fa fa-download"></i>
+              <i class="fa fa-cloud-download"></i>
             </span>
             <span>{{ $t('UpdateExtension') }}</span>
           </a>

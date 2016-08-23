@@ -5,7 +5,7 @@ module.exports =
   'Login': '登录'
   'Signup': '注册'
   'Gloria':
-    'RawDescription': '<strong>Chrome</strong> 上的<strong>可编程</strong>网站通知聚合器'
+    'RawDescription': '<strong>Chrome</strong> 上的<strong>可编程</strong>网站通知聚合器.<br><strong>感受信息的流动, 不错过任何新消息.</strong>'
     'Description': '一个可编程网站通知聚合器'
   'InstallExtension': '安装扩展程序'
   'ViewTasks': '浏览任务'
