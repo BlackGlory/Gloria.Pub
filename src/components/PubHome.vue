@@ -18,7 +18,7 @@
             </span>
             <span>{{ $t('InstallExtension') }}</span>
           </a>
-          <a v-show="installed && !needUpdate" class="button is-success is-large" href="//docs.gloria.pub">
+          <a v-show="installed && !needUpdate" class="button is-success is-large" href="http://docs.gloria.pub">
             <span class="icon">
               <i class="fa fa-download"></i>
             </span>
