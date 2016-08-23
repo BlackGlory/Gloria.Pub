@@ -14,21 +14,15 @@
         <p class="hero-buttons">
           <a v-show="!installed" class="button is-primary is-large" @click="install">
             <span class="icon">
-              <i class="fa fa-download"></i>
+              <i class="fa fa-cloud-download"></i>
             </span>
             <span>{{ $t('InstallExtension') }}</span>
           </a>
-          <a v-show="installed && !needUpdate" class="button is-success is-large" href="http://docs.gloria.pub">
+          <a v-show="installed" class="button is-success is-large" href="http://docs.gloria.pub">
             <span class="icon">
               <i class="fa fa-book"></i>
             </span>
             <span>{{ $t('ViewTutorial') }}</span>
-          </a>
-          <a v-show="installed && needUpdate" class="button is-primary is-large" @click="install">
-            <span class="icon">
-              <i class="fa fa-cloud-download"></i>
-            </span>
-            <span>{{ $t('UpdateExtension') }}</span>
           </a>
           <a class="button is-large" v-link="'tasks'">
             {{ $t('ViewTasks') }}
@@ -88,7 +82,7 @@
 
 require! 'vue': Vue
 require! './PubTable.vue': PubTable
-require! '../utils.ls': { get-tasks, MessageBox, send-to-extension, VERSION }
+require! '../utils.ls': { get-tasks, MessageBox, send-to-extension }
 require! 'vue-loading': { default: loading }
 
 export
@@ -100,7 +94,6 @@ export
     list: []
     is-loading: false
     page-title: ''
-    need-update: false
     installed: false
   components: {
     PubTable
@@ -114,13 +107,8 @@ export
         type: 'extension.version'
       .then (local-version) ->
         data.installed = true
-        if VERSION > local-version # string compare
-          data.need-update = true
-        else
-          data.need-update = false
       .catch ->
         data.installed = false
-        data.need-update = false
       .then ->
         get-tasks!
       .then ({ list }) ~>

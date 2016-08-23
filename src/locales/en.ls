@@ -64,6 +64,5 @@ module.exports =
   'User': 'User'
   'FindTask': 'Find a task'
   'SignupSuccess': 'Signup success, now redirect to login page'
-  'UpdateExtension': 'Update Extension'
   'ViewTutorial': 'View Tutorial'
   'GetStarted': 'Get Started'
