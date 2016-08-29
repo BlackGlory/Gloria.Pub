@@ -1,6 +1,6 @@
 {
   "name": "gloria.pub",
-  "version": "0.5.1",
+  "version": "0.9.1",
   "description": "A website to share your Gloria task.",
   "main": "build/app.html",
   "scripts": {

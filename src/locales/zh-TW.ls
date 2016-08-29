@@ -5,7 +5,7 @@ module.exports =
   'Login': '登錄'
   'Signup': '註冊'
   'Gloria':
-    'RawDescription': '<strong>Chrome</strong> 上的<strong>可編程</strong>網站通知聚合器.<br>通過自定義的任務代碼抓取網站上的新內容, 並彈出通知提醒您.<br><strong>感受信息的流動, 不錯過任何新消息.</strong>'
+    'RawDescription': '<strong>Chrome</strong> 上的<strong>可編程</strong>網站通知聚合器.<br>通過自定義代碼抓取網站上的新內容彈出通知提醒.<br><strong>感受信息的流動, 不錯過任何新消息.</strong>'
     'Description': '一個可編程網站通知聚合器'
   'InstallExtension': '安裝擴展程序'
   'ViewTasks': '瀏覽任務'
